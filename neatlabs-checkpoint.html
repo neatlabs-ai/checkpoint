@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEATLABS™ CHECKPOINT — CMMC Level 2 Controls Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070c07;
+  --surface: #0d140d;
+  --surface2: #121a12;
+  --surface3: #172017;
+  --border: rgba(120,180,80,0.08);
+  --border2: rgba(120,180,80,0.15);
+  --text: #d4e8c2;
+  --muted: rgba(212,232,194,0.50);
+  --dim: rgba(212,232,194,0.25);
+  --gold: #c8a84b;
+  --gold-dim: rgba(200,168,75,0.10);
+  --gold-glow: rgba(200,168,75,0.20);
+  --green: #4a9c2f;
+  --green-bright: #6fcf47;
+  --green-dim: rgba(74,156,47,0.12);
+  --amber: #d97706;
+  --amber-dim: rgba(217,119,6,0.10);
+  --red: #c94a3a;
+  --red-dim: rgba(201,74,58,0.10);
+  --blue: #3a7cc9;
+  --blue-dim: rgba(58,124,201,0.10);
+  --teal: #2a9c8f;
+  --teal-dim: rgba(42,156,143,0.10);
+  --scan-line: rgba(120,200,60,0.012);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* SCAN LINE EFFECT */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    var(--scan-line) 2px,
+    var(--scan-line) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* GRID OVERLAY */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(120,180,60,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,180,60,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap { position: relative; z-index: 1; }
+
+/* CLASSIFIED HEADER BAND */
+.classified-band {
+  background: var(--gold);
+  text-align: center;
+  padding: 5px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #070c07;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid var(--border2);
+  background: linear-gradient(180deg, rgba(200,168,75,0.05) 0%, transparent 100%);
+  padding: 28px 40px 24px;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-badge {
+  background: var(--gold-dim);
+  border: 1px solid rgba(200,168,75,0.3);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.brand-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green-bright);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.action-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* HERO */
+.header-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: start;
+}
+
+h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.h1-top { color: var(--gold); display: block; }
+.h1-mid { color: var(--text); display: block; }
+.h1-bot { color: var(--green-bright); display: block; }
+
+.hero-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.9;
+  max-width: 560px;
+}
+
+.hero-meta strong { color: var(--gold); }
+
+/* SPRS SCORE PANEL */
+.sprs-panel {
+  background: var(--surface);
+  border: 1px solid var(--gold-glow);
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 260px;
+  flex-shrink: 0;
+}
+
+.sprs-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.sprs-score-display {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.sprs-score-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.sprs-bar-wrap {
+  background: var(--surface2);
+  border-radius: 2px;
+  height: 4px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.sprs-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s;
+  width: 0%;
+}
+
+.sprs-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sprs-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sprs-stat-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sprs-stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* STATUS LEGEND */
+.status-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* MAIN LAYOUT */
+.main {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px 40px 40px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 16px;
+  height: fit-content;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.panel-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Search */
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+.search-wrap input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  width: 100%;
+}
+
+.search-wrap input::placeholder { color: var(--dim); }
+
+/* Domain nav */
+.domain-list { display: flex; flex-direction: column; gap: 3px; }
+
+.domain-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: left;
+  transition: all 0.12s;
+  width: 100%;
+}
+
+.domain-btn:hover { background: var(--surface2); border-color: var(--border); color: var(--text); }
+.domain-btn.active { background: var(--gold-dim); border-color: rgba(200,168,75,0.3); color: var(--gold); }
+
+.domain-code {
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.domain-count {
+  margin-left: auto;
+  background: var(--surface3);
+  padding: 1px 6px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.domain-progress {
+  height: 2px;
+  background: var(--surface3);
+  border-radius: 99px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.domain-progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 99px;
+  transition: width 0.3s;
+}
+
+/* Status filter */
+.status-list { display: flex; flex-direction: column; gap: 3px; }
+
+.status-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.12s;
+  width: 100%;
+}
+
+.status-btn:hover { background: var(--surface2); border-color: var(--border); color: var(--text); }
+.status-btn.active { background: var(--surface2); border-color: var(--border2); color: var(--text); }
+
+/* Domain mini progress in sidebar */
+.domain-progress-section { display: flex; flex-direction: column; gap: 6px; }
+
+.dps-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dps-code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--dim);
+  width: 22px;
+  flex-shrink: 0;
+}
+
+.dps-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--surface3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.dps-bar-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 99px;
+  transition: width 0.3s;
+}
+
+.dps-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--dim);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* CONTENT */
+.content {}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolbar-left {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.toolbar-left strong { color: var(--text); }
+
+.toolbar-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* DOMAIN SECTION */
+.domain-section { margin-bottom: 28px; }
+
+.domain-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.domain-header:hover { background: var(--surface2); }
+
+.domain-header-code {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1px;
+  width: 50px;
+  flex-shrink: 0;
+}
+
+.domain-header-info { flex: 1; }
+
+.domain-header-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.domain-header-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.domain-header-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.domain-control-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.domain-control-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: var(--dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.domain-prog-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.domain-prog-bar {
+  width: 80px;
+  height: 4px;
+  background: var(--surface3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.domain-prog-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 99px;
+  transition: width 0.3s;
+}
+
+.domain-prog-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--green-bright);
+}
+
+.collapse-icon {
+  font-size: 12px;
+  color: var(--dim);
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+
+.domain-section.collapsed .collapse-icon { transform: rotate(-90deg); }
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border2);
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
+}
+
+.domain-section.collapsed .controls-grid { display: none; }
+
+/* CONTROL CARD */
+.control-card {
+  background: var(--surface);
+  padding: 0;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.control-card:hover { background: var(--surface2); }
+
+/* Status color strip on left */
+.control-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+}
+
+.control-card[data-status="implemented"]::before { background: var(--green); }
+.control-card[data-status="in-progress"]::before { background: var(--amber); }
+.control-card[data-status="not-started"]::before { background: var(--red); }
+.control-card[data-status="na"]::before { background: var(--dim); }
+
+.card-inner { padding: 14px 14px 14px 18px; }
+
+.card-top-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.control-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.control-title {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.status-select {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.status-select.s-implemented { border-color: var(--green); color: var(--green-bright); background: var(--green-dim); }
+.status-select.s-in-progress { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
+.status-select.s-not-started { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+.status-select.s-na { border-color: var(--dim); color: var(--muted); }
+
+.control-desc {
+  font-family: 'Barlow', sans-serif;
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Expandable details */
+.card-details {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-top: 2px;
+}
+
+.control-card.expanded .card-details { display: block; }
+
+.details-section { margin-bottom: 10px; }
+
+.details-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.detail-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.failure-items, .evidence-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.failure-item, .evidence-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding-left: 12px;
+  position: relative;
+}
+
+.failure-item::before { content: '✗'; position: absolute; left: 0; color: var(--red); }
+.evidence-item::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+
+.card-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.5px;
+  transition: color 0.12s;
+}
+
+.card-toggle-btn:hover { color: var(--gold); }
+
+.card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.difficulty-badge {
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.diff-easy { background: var(--green-dim); color: var(--green-bright); border: 1px solid rgba(74,156,47,0.3); }
+.diff-medium { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(217,119,6,0.3); }
+.diff-hard { background: var(--red-dim); color: var(--red); border: 1px solid rgba(201,74,58,0.3); }
+
+.nist-ref {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--dim);
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--dim);
+  font-family: 'IBM Plex Mono', monospace;
+  grid-column: 1/-1;
+}
+
+/* ALERT BAR */
+.alert-bar {
+  background: var(--gold-dim);
+  border: 1px solid rgba(200,168,75,0.25);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.alert-bar strong { color: var(--gold); }
+
+/* NEATLABS BANNER */
+.neatlabs-banner {
+  background: linear-gradient(135deg, #070c07 0%, #0d140d 50%, #070c07 100%);
+  border-top: 1px solid rgba(200,168,75,0.2);
+  position: relative;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.banner-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.banner-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.banner-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+}
+
+.banner-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+.banner-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.banner-chip {
+  padding: 3px 10px;
+  background: rgba(200,168,75,0.07);
+  border: 1px solid rgba(200,168,75,0.15);
+  border-radius: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(200,168,75,0.6);
+  letter-spacing: 0.3px;
+}
+
+.banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  background: var(--gold);
+  color: #070c07;
+  border-radius: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.banner-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,168,75,0.3); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 40px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.footer-disclaimer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.footer-disclaimer strong { color: var(--gold); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.footer-brand span { color: var(--gold); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  transform: translateY(16px);
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+@keyframes fadeUp { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
+.domain-section { animation: fadeUp 0.25s ease both; }
+
+@media (max-width: 1100px) {
+  .main { grid-template-columns: 1fr; padding: 16px 20px; }
+  .sidebar { position: static; }
+  .header-hero { grid-template-columns: 1fr; }
+  header { padding: 20px; }
+  .controls-grid { grid-template-columns: 1fr; }
+  .domain-header-code { font-size: 20px; }
+  h1 { font-size: 36px; }
+}
+
+@media (max-width: 700px) {
+  header { padding: 16px; }
+  .main { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="classified-band">⬛ NEATLABS™ CHECKPOINT · CMMC LEVEL 2 · NIST SP 800-171 REV.2 · 110 CONTROLS · UNCLASSIFIED // FOR OFFICIAL USE ⬛</div>
+
+<header>
+  <div class="header-bar">
+    <div class="brand-row">
+      <div class="brand-badge">🛡 CMMC Level 2</div>
+      <span class="brand-name">NEATLABS™ CHECKPOINT</span>
+    </div>
+    <div class="header-actions">
+      <button class="action-btn" onclick="resetAll()">⟳ Reset All</button>
+      <button class="action-btn" onclick="exportReport()">📤 Export Report</button>
+      <button class="action-btn" onclick="collapseAll()">▲ Collapse All</button>
+      <button class="action-btn" onclick="expandAll()">▼ Expand All</button>
+    </div>
+  </div>
+
+  <div class="header-hero">
+    <div>
+      <h1>
+        <span class="h1-top">CHECKPOINT</span>
+        <span class="h1-mid">CMMC Level 2</span>
+        <span class="h1-bot">Controls Reference</span>
+      </h1>
+      <p class="hero-meta">
+        All <strong>110 controls</strong> from NIST SP 800-171 Rev.2 — the assessment baseline for CMMC Level 2 as of 2025. Each control includes a plain-English explanation, common failure points, and evidence requirements. Track your implementation status and watch your SPRS score build in real time.<br><br>
+        <strong>STATUS:</strong> CMMC Title 48 Rule effective Nov 10, 2025 · C3PAO assessments now active · Rev.2 is the required baseline (not Rev.3)
+      </p>
+
+      <div class="status-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>Implemented</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>In Progress</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Not Started</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--dim)"></span>N/A</div>
+      </div>
+    </div>
+
+    <div class="sprs-panel">
+      <div class="sprs-title">⬛ SPRS Readiness Score</div>
+      <div class="sprs-score-display" id="sprsScore" style="color:var(--red)">0</div>
+      <div class="sprs-score-label">OF 110 CONTROLS IMPLEMENTED</div>
+      <div class="sprs-bar-wrap">
+        <div class="sprs-bar-fill" id="sprsBarFill"></div>
+      </div>
+      <div class="sprs-breakdown">
+        <div class="sprs-stat">
+          <div class="sprs-stat-num" style="color:var(--green-bright)" id="countImpl">0</div>
+          <div class="sprs-stat-label">Implemented</div>
+        </div>
+        <div class="sprs-stat">
+          <div class="sprs-stat-num" style="color:var(--amber)" id="countProg">0</div>
+          <div class="sprs-stat-label">In Progress</div>
+        </div>
+        <div class="sprs-stat">
+          <div class="sprs-stat-num" style="color:var(--red)" id="countNot">0</div>
+          <div class="sprs-stat-label">Not Started</div>
+        </div>
+        <div class="sprs-stat">
+          <div class="sprs-stat-num" style="color:var(--muted)" id="countNA">0</div>
+          <div class="sprs-stat-label">N/A</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="panel">
+    <div class="search-wrap">
+      <span style="color:var(--dim);font-size:12px">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search controls..." oninput="renderAll()">
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Domains</div>
+    <div class="domain-list" id="domainNav"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Filter by Status</div>
+    <div class="status-list">
+      <button class="status-btn active" onclick="setStatusFilter('all',this)">⬛ All Controls</button>
+      <button class="status-btn" onclick="setStatusFilter('implemented',this)">✅ Implemented</button>
+      <button class="status-btn" onclick="setStatusFilter('in-progress',this)">🔄 In Progress</button>
+      <button class="status-btn" onclick="setStatusFilter('not-started',this)">❌ Not Started</button>
+      <button class="status-btn" onclick="setStatusFilter('na',this)">⬜ N/A</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Progress by Domain</div>
+    <div class="domain-progress-section" id="domainProgressBars"></div>
+  </div>
+</aside>
+
+<!-- CONTENT -->
+<main class="content">
+  <div class="alert-bar">
+    <span style="font-size:14px;flex-shrink:0;margin-top:1px">⚡</span>
+    <div>
+      <strong>2025 ENFORCEMENT ACTIVE.</strong> CMMC Title 48 Rule took effect November 10, 2025. DoD contracts are now incorporating DFARS 252.204-7021. Assessment basis is NIST SP 800-171 Rev.2 (110 controls, 320 objectives). Rev.3 is NOT yet required — maintain Rev.2 compliance while building awareness of Rev.3 changes expected 2026–2027. A perfect SPRS score is 110. Scores below 70 are high risk for contract award. All gaps must be documented in your POA&M.
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-left">Showing <strong id="visibleCount">110</strong> of 110 controls</div>
+    <div class="toolbar-right">
+      <select class="action-btn" id="diffFilter" onchange="renderAll()" style="cursor:pointer">
+        <option value="all">All Difficulties</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="controlsContainer"></div>
+</main>
+</div>
+
+<div class="neatlabs-banner">
+  <div class="banner-inner">
+    <div>
+      <div class="banner-eyebrow">🛡️ NEATLABS™ · Security 360, LLC · SDVOSB</div>
+      <div class="banner-headline">Full CMMC Compliance Suite at NEATLABS.ai</div>
+      <div class="banner-sub">CHECKPOINT is one of 200+ tools by NEATLABS™. Need SSP templates, POA&M tracking, policy documentation, or a fractional CISO for your CMMC journey? Security 360, LLC brings 28+ years of federal cybersecurity expertise to defense contractors.</div>
+      <div class="banner-chips">
+        <span class="banner-chip">📋 SSP Manager Professional</span>
+        <span class="banner-chip">📄 CMMC Policy Templates</span>
+        <span class="banner-chip">🔭 VANTAGE — Intel Discovery</span>
+        <span class="banner-chip">⚠ DATABROKER ATLAS</span>
+        <span class="banner-chip">🏛 C3PAO-Ready Consulting</span>
+      </div>
+    </div>
+    <a class="banner-cta" href="https://neatlabs.ai" target="_blank" rel="noopener noreferrer">Visit NEATLABS.ai →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-disclaimer">
+    <strong>DISCLAIMER —</strong> NEATLABS™ CHECKPOINT is provided by Security 360, LLC for informational and educational purposes. This tool is based on NIST SP 800-171 Revision 2 and CMMC Assessment Guide Level 2. Control descriptions are plain-English interpretations and do not replace the official NIST SP 800-171 publication or CMMC Assessment Guide. <strong>This is not legal or compliance advice.</strong> SPRS scores shown are readiness indicators only and do not constitute an official DoD assessment result. Always consult a qualified C3PAO or Registered Practitioner for your official assessment. NEATLABS™ is not affiliated with the Department of Defense, NIST, or the Cyber AB.
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-brand">© 2025 <span>NEATLABS™ CHECKPOINT</span> · Security 360, LLC · SDVOSB</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim)">NIST SP 800-171 Rev.2 · 110 Controls · 14 Domains · neatlabs.ai</div>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+<div class="toast" id="toast"></div>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DOMAINS
+// ═══════════════════════════════════════════════════════════════
+const DOMAINS = [
+  { code:'AC', name:'Access Control',                    abbr:'3.1',  desc:'Limit system access to authorized users, processes, and devices — and to only the types of transactions and functions authorized users are permitted to execute.' },
+  { code:'AT', name:'Awareness & Training',              abbr:'3.2',  desc:'Ensure personnel are aware of the security risks associated with their activities and are trained to carry out their security responsibilities.' },
+  { code:'AU', name:'Audit & Accountability',            abbr:'3.3',  desc:'Create and retain system audit logs to the extent needed to enable monitoring, analysis, investigation, and reporting of unlawful or unauthorized activity.' },
+  { code:'CM', name:'Configuration Management',         abbr:'3.4',  desc:'Establish and maintain baseline configurations and inventories of organizational systems — and establish and enforce security configuration settings.' },
+  { code:'IA', name:'Identification & Authentication',  abbr:'3.5',  desc:'Identify information system users, processes acting on behalf of users, and devices — and authenticate the identities of those users, processes, and devices before allowing access.' },
+  { code:'IR', name:'Incident Response',                 abbr:'3.6',  desc:'Establish an operational incident-handling capability for organizational systems that includes preparation, detection, analysis, containment, recovery, and user response activities.' },
+  { code:'MA', name:'Maintenance',                       abbr:'3.7',  desc:'Perform maintenance on organizational information systems and provide controls on the tools, techniques, mechanisms, and personnel that conduct maintenance.' },
+  { code:'MP', name:'Media Protection',                  abbr:'3.8',  desc:'Protect system media containing CUI, both paper and digital, and limit access to CUI on system media to authorized users.' },
+  { code:'PS', name:'Personnel Security',                abbr:'3.9',  desc:'Screen individuals prior to authorizing access to organizational systems — and ensure CUI is protected during and after personnel actions such as terminations and transfers.' },
+  { code:'PE', name:'Physical Protection',               abbr:'3.10', desc:'Limit physical access to organizational information systems, equipment, and the respective operating environments to authorized individuals.' },
+  { code:'RA', name:'Risk Assessment',                   abbr:'3.11', desc:'Periodically assess the risk to organizational operations, organizational assets, and individuals — from the operation of organizational systems and the associated processing, storage, and transmission of CUI.' },
+  { code:'CA', name:'Security Assessment',               abbr:'3.12', desc:'Periodically assess the security controls in organizational systems to determine if the controls are effective in their application — and develop and implement plans of action designed to correct deficiencies.' },
+  { code:'SC', name:'System & Comms Protection',        abbr:'3.13', desc:'Monitor, control, and protect communications at the external boundaries and key internal boundaries of information systems — and employ architectural designs and implementation techniques to promote information security.' },
+  { code:'SI', name:'System & Info Integrity',          abbr:'3.14', desc:'Identify, report, and correct information and information system flaws in a timely manner — and provide protection from malicious code at appropriate locations within organizational information systems.' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// ALL 110 CONTROLS (NIST SP 800-171 Rev.2)
+// ═══════════════════════════════════════════════════════════════
+const CONTROLS = [
+// ── AC — Access Control (22) ──────────────────────────────
+{ id:'3.1.1', domain:'AC', title:'Authorized Access Control', diff:'easy',
+  desc:'Limit information system access to authorized users, processes acting on behalf of authorized users, and devices (including other information systems). Implement a formal access control policy and ensure only approved individuals can log into systems handling CUI.',
+  failures:['No formal access control policy documented','Guest/shared accounts on CUI systems','No process for provisioning/deprovisioning accounts','Former employees retaining active accounts'],
+  evidence:['Access control policy','User account list with role assignments','AD/directory group policy configurations','Offboarding checklist records'] },
+{ id:'3.1.2', domain:'AC', title:'Transaction & Function Control', diff:'medium',
+  desc:'Limit information system access to the types of transactions and functions that authorized users are permitted to execute. Users should only access what they need to do their job — no more.',
+  failures:['Users have admin rights they don\'t need','No role-based access control (RBAC) implemented','Developers have production system access','Shared admin credentials in use'],
+  evidence:['RBAC matrix or access control table','Privilege management policy','Screenshots of role assignments','Quarterly access reviews'] },
+{ id:'3.1.3', domain:'AC', title:'CUI Flow Control', diff:'medium',
+  desc:'Control the flow of CUI in accordance with approved authorizations. Prevent CUI from flowing to systems or people that aren\'t authorized to receive it — including via email, USB, or cloud storage.',
+  failures:['CUI emailed to personal accounts','No DLP controls on email/file transfers','CUI stored in non-approved cloud services','No data classification labels on CUI documents'],
+  evidence:['Data Loss Prevention (DLP) policy','Email filtering/DLP configuration','Network segmentation diagrams','Data classification policy'] },
+{ id:'3.1.4', domain:'AC', title:'Separation of Duties', diff:'medium',
+  desc:'Separate the duties of individuals to reduce the risk of malevolent activity without collusion. No single person should control a complete sensitive process from start to finish.',
+  failures:['Same person approves and processes transactions','IT admins who also control audit logs','No documented separation of duties matrix','Single admin controls all system functions'],
+  evidence:['Separation of duties matrix','Workflow documentation showing dual control','Role assignment records','Audit log access control records'] },
+{ id:'3.1.5', domain:'AC', title:'Least Privilege', diff:'hard',
+  desc:'Employ the principle of least privilege, including for specific security functions and privileged accounts. Users and processes should only have the minimum access necessary to perform their job functions.',
+  failures:['All staff have local admin rights','Excessive group memberships in AD','Service accounts with admin privileges','No formal least privilege review process'],
+  evidence:['Privileged account inventory','Least privilege policy','Access review results','PAM (Privileged Access Management) configuration'] },
+{ id:'3.1.6', domain:'AC', title:'Non-Privileged Account Use', diff:'medium',
+  desc:'Use non-privileged accounts or roles when accessing non-security functions. Admins should have separate accounts for regular work and privileged tasks — not use their admin account for browsing email.',
+  failures:['Admins use elevated accounts for daily tasks','No separate admin/user accounts for IT staff','Domain admin used for email and internet browsing'],
+  evidence:['Policy requiring separate admin accounts','AD screenshot showing separate admin accounts','Training records on privileged account use'] },
+{ id:'3.1.7', domain:'AC', title:'Privileged Function Control', diff:'medium',
+  desc:'Prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs. Privileged operations must be logged and restricted.',
+  failures:['Regular users can install software','No audit logging of privileged function execution','No enforcement preventing privilege escalation'],
+  evidence:['Audit log configuration showing privileged function logging','Software restriction policies','Group Policy settings screenshots'] },
+{ id:'3.1.8', domain:'AC', title:'Failed Login Attempts', diff:'easy',
+  desc:'Limit unsuccessful logon attempts. Configure systems to lock accounts after a defined number of failed login attempts to protect against brute-force attacks.',
+  failures:['No account lockout policy configured','Lockout threshold too high (>10 attempts)','Lockout not applied to privileged accounts','No alert on repeated failed logins'],
+  evidence:['Account lockout policy configuration','Group Policy settings screenshots','SIEM alerts for failed login attempts'] },
+{ id:'3.1.9', domain:'AC', title:'Privacy & Security Notices', diff:'easy',
+  desc:'Provide privacy and security notices consistent with CUI rules. Display system use notification banners when users log in — these must reference CUI and authorized use.',
+  failures:['No login banner displayed on CUI systems','Banner doesn\'t mention CUI or government data','Banner not applied to all access methods (VPN, web, SSH)'],
+  evidence:['Screenshots of login banners on all systems','Banner text content review','VPN and remote access banner screenshots'] },
+{ id:'3.1.10', domain:'AC', title:'Session Lock', diff:'easy',
+  desc:'Use session lock with pattern-hiding displays after a period of inactivity. Systems should auto-lock after 15 minutes (or per policy) of inactivity.',
+  failures:['No screen lock policy enforced','Lock timeout too long (>15 minutes)','Screen saver without password re-authentication','Mobile devices not enforcing screen lock'],
+  evidence:['Group Policy/MDM configuration for session lock','System settings screenshots','Timeout value documentation'] },
+{ id:'3.1.11', domain:'AC', title:'Session Termination', diff:'easy',
+  desc:'Terminate (automatically end) a user session after a defined condition — such as inactivity period or time of day. Different from screen lock — this actually ends the session.',
+  failures:['No session timeout configured on remote access','VPN sessions stay connected indefinitely','Web applications don\'t time out idle sessions'],
+  evidence:['Session timeout policy','VPN configuration screenshots','Web application timeout settings'] },
+{ id:'3.1.12', domain:'AC', title:'Remote Access Control', diff:'medium',
+  desc:'Monitor and control remote access sessions. All remote access must be explicitly authorized, monitored, and controlled through approved mechanisms.',
+  failures:['No VPN required for remote access to CUI systems','Remote access not logged or monitored','Unauthorized remote access tools (TeamViewer, etc.) in use','No MFA on remote access'],
+  evidence:['Remote access policy','VPN configuration and user logs','MFA enrollment records','Approved remote access tool list'] },
+{ id:'3.1.13', domain:'AC', title:'Remote Access Cryptography', diff:'medium',
+  desc:'Employ cryptographic mechanisms to protect the confidentiality of remote access sessions. All remote connections must use strong encryption (TLS 1.2+, AES-256, etc.).',
+  failures:['Unencrypted protocols used for remote access (Telnet, FTP)','Weak encryption suites configured','No enforcement of minimum TLS version'],
+  evidence:['VPN encryption configuration','TLS configuration documentation','Prohibited protocol list','Network scan results showing no Telnet/FTP'] },
+{ id:'3.1.14', domain:'AC', title:'Remote Access via Managed Access Points', diff:'medium',
+  desc:'Route remote access via managed network access control points. Remote users must access CUI systems through centrally managed and monitored access points — not directly.',
+  failures:['Users can bypass VPN and access CUI systems directly','Remote access paths not documented','No centralized access point monitoring'],
+  evidence:['Network architecture diagram','VPN gateway configuration','Access control point monitoring logs'] },
+{ id:'3.1.15', domain:'AC', title:'Privileged Remote Access Authorization', diff:'medium',
+  desc:'Authorize remote execution of privileged commands and access to security-relevant information via remote access only for documented operational needs. Extra controls for privileged remote access.',
+  failures:['Admin access granted via standard VPN without additional controls','No additional approval required for privileged remote access','No documentation of authorized privileged remote access'],
+  evidence:['Privileged remote access authorization records','Jump server / PAM solution configuration','Approval workflow for privileged remote access'] },
+{ id:'3.1.16', domain:'AC', title:'Wireless Access Authorization', diff:'easy',
+  desc:'Authorize wireless access prior to allowing such connections. Only approved wireless devices and users should connect to organizational wireless networks.',
+  failures:['Open WiFi networks without authentication','No inventory of authorized wireless devices','Guest WiFi on same network as CUI systems','No wireless access policy documented'],
+  evidence:['Wireless access policy','802.1x or WPA2-Enterprise configuration','Authorized wireless device inventory','Network diagrams showing wireless network isolation'] },
+{ id:'3.1.17', domain:'AC', title:'Wireless Access Cryptography', diff:'easy',
+  desc:'Protect wireless access using authentication and encryption. WiFi networks must use strong authentication (WPA2 or WPA3) and encryption.',
+  failures:['WEP or WPA (legacy) used instead of WPA2/WPA3','No pre-shared key management process','Weak WiFi passwords in use'],
+  evidence:['Wireless configuration screenshots showing WPA2/WPA3','Encryption key management process','Access point configuration documentation'] },
+{ id:'3.1.18', domain:'AC', title:'Mobile Device Connection Control', diff:'medium',
+  desc:'Control connection of mobile devices. Establish policy and controls for personally-owned and organization-issued mobile devices that may access CUI.',
+  failures:['No MDM solution for devices accessing CUI','Personal phones accessing corporate email with CUI','No mobile device policy documented','No remote wipe capability on mobile devices'],
+  evidence:['Mobile device policy','MDM enrollment records','BYOD policy','Remote wipe capability documentation'] },
+{ id:'3.1.19', domain:'AC', title:'CUI Encryption on Mobile', diff:'medium',
+  desc:'Encrypt CUI on mobile devices and mobile computing platforms. Any mobile device that stores or transmits CUI must encrypt that data.',
+  failures:['Mobile devices storing CUI without encryption','No verification that device encryption is enabled','Laptops without full-disk encryption (BitLocker/FileVault)'],
+  evidence:['BitLocker/FileVault deployment records','MDM encryption enforcement policy','Device encryption compliance reports'] },
+{ id:'3.1.20', domain:'AC', title:'External System Connections', diff:'medium',
+  desc:'Verify and control/limit connections to external information systems. Establish terms and conditions for authorized individuals accessing organizational systems from external systems.',
+  failures:['No policy governing contractor access from personal systems','Federal systems connected without formal authorization','No terms of service for external system connections'],
+  evidence:['External connection policy','Connection authorization records','Interconnection Security Agreements (ISAs)','Contractor access agreements'] },
+{ id:'3.1.21', domain:'AC', title:'Portable Storage Use Limitations', diff:'medium',
+  desc:'Limit use of portable storage devices on external systems. When organizational systems are used on external (non-controlled) systems, restrict portable storage use.',
+  failures:['USB drives freely used on systems handling CUI','No USB port control policy','No data loss prevention for portable storage'],
+  evidence:['Portable storage policy','USB port control configuration (GPO or endpoint solution)','Device control software reports'] },
+{ id:'3.1.22', domain:'AC', title:'CUI Control on Public Systems', diff:'medium',
+  desc:'Control CUI posted or processed on publicly accessible information systems. Ensure CUI is not inadvertently posted to public-facing websites or systems.',
+  failures:['CUI documents posted to public websites','No review process for publicly accessible content','CUI in public GitHub repositories','Metadata containing CUI in public files'],
+  evidence:['Public content review process','Website content policy','Authorized individual designation for public posting','Metadata scrubbing procedures'] },
+
+// ── AT — Awareness & Training (3) ──────────────────────────
+{ id:'3.2.1', domain:'AT', title:'Security Awareness Training', diff:'easy',
+  desc:'Ensure that all personnel are aware of the security risks associated with their activities and receive role-appropriate security awareness training.',
+  failures:['No annual security awareness training program','Training records not maintained','CUI-handling employees not trained on CUI requirements','New hire training not completed before CUI access'],
+  evidence:['Training program curriculum','Attendance/completion records for all staff','Training materials including CUI handling','Annual training completion reports'] },
+{ id:'3.2.2', domain:'AT', title:'Role-Based Security Training', diff:'medium',
+  desc:'Ensure that personnel with significant roles in security have training commensurate with those roles and the responsibilities and activities associated with them.',
+  failures:['IT admins not trained on their specific security responsibilities','Incident responders with no IR training','No specialized training for CUI custodians','ISSO/security officers without formal security training'],
+  evidence:['Role-specific training curriculum','Training completion records by role','Certifications or continuing education records','Role-based training policy'] },
+{ id:'3.2.3', domain:'AT', title:'Insider Threat Awareness', diff:'medium',
+  desc:'Provide security awareness training on recognizing and reporting potential indicators of insider threat. Personnel must know what insider threats look like and how to report them.',
+  failures:['No insider threat training content in awareness program','No reporting mechanism for insider threat concerns','Training doesn\'t cover indicators of compromise from insiders'],
+  evidence:['Insider threat training materials','Reporting hotline or process documentation','Training completion records','Insider threat program policy'] },
+
+// ── AU — Audit & Accountability (9) ───────────────────────
+{ id:'3.3.1', domain:'AU', title:'System Audit Logging', diff:'medium',
+  desc:'Create and retain system audit logs and records to the extent needed to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized activity.',
+  failures:['Critical systems not logging events','Logs not retained for minimum required period','Log storage insufficient (logs being overwritten)','No centralized logging solution'],
+  evidence:['Audit logging policy specifying retention period','SIEM/log aggregation configuration','Log source inventory','Retention period configuration screenshots'] },
+{ id:'3.3.2', domain:'AU', title:'Audit Log User Traceability', diff:'medium',
+  desc:'Ensure that the actions of individual users can be uniquely traced to those users so they can be held accountable. Logs must tie actions to specific individuals — no shared accounts.',
+  failures:['Shared accounts make individual traceability impossible','Logs capture process actions but not specific user context','Generic service account names masking real users'],
+  evidence:['Unique user identifier policy','Audit log samples showing user-attributable actions','No shared account policy documentation'] },
+{ id:'3.3.3', domain:'AU', title:'Audit Review & Reporting', diff:'hard',
+  desc:'Review and update logged events to ensure appropriate events are being captured — and review audit logs for indications of inappropriate activity.',
+  failures:['Logs collected but never reviewed','No defined audit review schedule','No alerts configured on critical events','Audit review process not documented'],
+  evidence:['Audit review schedule and records','SIEM alert configurations','Documented audit review process','Evidence of regular log review (review logs, reports)'] },
+{ id:'3.3.4', domain:'AU', title:'Audit Failure Alerting', diff:'medium',
+  desc:'Alert in the event of an audit logging process failure. If the logging system fails, administrators must be notified immediately — logging is too important to fail silently.',
+  failures:['No alerting configured for logging system failures','SIEM agent failures go undetected','Disk full conditions silently stop logging','No monitoring of log pipeline health'],
+  evidence:['Alert configuration for logging system failures','Monitoring dashboard screenshots','Incident response procedure for logging failures'] },
+{ id:'3.3.5', domain:'AU', title:'Audit Log Review Processes', diff:'hard',
+  desc:'Correlate audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity.',
+  failures:['No process for correlating events across multiple log sources','Logs reviewed in isolation without correlation','No threat hunting or anomaly detection process','Alerts not acted upon within defined timeframe'],
+  evidence:['SIEM correlation rules documentation','Incident response procedures referencing audit logs','Threat hunting runbooks','Alert triage process documentation'] },
+{ id:'3.3.6', domain:'AU', title:'Audit Log Reduction & Reporting', diff:'medium',
+  desc:'Provide audit record reduction and report generation to support on-demand analysis and reporting. Ability to generate meaningful reports from raw log data.',
+  failures:['No capability to filter/search audit logs efficiently','Can\'t generate audit reports for specific timeframes','No log aggregation — must check each system individually'],
+  evidence:['SIEM reporting capability demonstration','Report templates','Log aggregation/indexing configuration'] },
+{ id:'3.3.7', domain:'AU', title:'Authoritative Time Source', diff:'easy',
+  desc:'Provide a system capability that compares and synchronizes internal system clocks with an authoritative source to generate time stamps for audit records.',
+  failures:['Systems not synchronized via NTP','Different systems showing different timestamps','NTP server not configured to authoritative time source','No verification that NTP is working correctly'],
+  evidence:['NTP configuration on all systems','NTP server configuration to authoritative source (time.nist.gov, etc.)','System clock audit confirming synchronization'] },
+{ id:'3.3.8', domain:'AU', title:'Audit Log Protection', diff:'medium',
+  desc:'Protect audit information and audit tools from unauthorized access, modification, and deletion. Logs must be protected from tampering — including by admins being audited.',
+  failures:['Admins can delete or modify their own audit logs','Logs stored on same system being audited','No write-protection or WORM storage for audit logs','Log integrity not verified'],
+  evidence:['Log storage access control configuration','Separate log management system access controls','WORM storage or log shipping to separate system','Log integrity verification process'] },
+{ id:'3.3.9', domain:'AU', title:'Privileged User Audit Management', diff:'medium',
+  desc:'Limit management of audit logging to a subset of privileged users — specifically, the individuals who manage audit logs should be different from those being audited.',
+  failures:['Same admins control both systems and audit logs','No separation between audit log administration and system administration','Audit log management not restricted to designated roles'],
+  evidence:['Access control list for audit log management','Role separation documentation','Audit log admin account inventory'] },
+
+// ── CM — Configuration Management (9) ────────────────────
+{ id:'3.4.1', domain:'CM', title:'System Baseline Configuration', diff:'hard',
+  desc:'Establish and maintain baseline configurations and inventories of organizational systems (including hardware, software, firmware, and documentation) throughout the system development lifecycle.',
+  failures:['No documented baseline configuration for systems','Configuration baselines not kept current','No inventory of hardware, software, and firmware','Baselines not reviewed after system changes'],
+  evidence:['Baseline configuration documents for each system type','Hardware/software/firmware inventory','Configuration management plan','Baseline update procedures'] },
+{ id:'3.4.2', domain:'CM', title:'Security Configuration Settings', diff:'hard',
+  desc:'Establish and enforce security configuration settings for IT products employed in organizational systems. Use CIS Benchmarks, DISA STIGs, or equivalent guidance.',
+  failures:['Default configurations used without hardening','No security baseline applied to endpoints','CIS Benchmarks or DISA STIGs not applied','Configuration settings not enforced via GPO or equivalent'],
+  evidence:['Security configuration standards (CIS/STIG references)','Configuration compliance scan results','GPO settings documentation','Vulnerability assessment showing hardened configuration'] },
+{ id:'3.4.3', domain:'CM', title:'System Change Control', diff:'medium',
+  desc:'Track, review, approve, and log changes to organizational systems. No unauthorized changes — all changes must go through a defined change control process.',
+  failures:['No change management process documented','Changes made without approval or tracking','Emergency changes not documented after the fact','No change log or ticketing system'],
+  evidence:['Change management policy','Change request/approval records (ITSM tickets)','Change advisory board (CAB) meeting records','Change log for past 12 months'] },
+{ id:'3.4.4', domain:'CM', title:'Security Impact Analysis', diff:'medium',
+  desc:'Analyze the security impact of changes prior to implementation. Before implementing changes, assess whether they could introduce security vulnerabilities or affect CUI protection.',
+  failures:['No security review built into change process','Changes deployed without security impact assessment','Patches applied without testing in non-prod environment','No rollback plan for changes'],
+  evidence:['Change management process documentation requiring security review','Security impact assessment template','Sample completed security assessments','Testing/staging environment policy'] },
+{ id:'3.4.5', domain:'CM', title:'Access Restrictions for Change', diff:'medium',
+  desc:'Define, document, approve, and enforce physical and logical access restrictions associated with changes to organizational systems. Only authorized personnel can make changes.',
+  failures:['Anyone can make configuration changes','No change authorization process','Developers have production access for direct changes','No physical access controls for hardware changes'],
+  evidence:['Access control restrictions for production systems','Change authorization records','Developer access policy restricting production access','Physical access logs for hardware changes'] },
+{ id:'3.4.6', domain:'CM', title:'Least Functionality', diff:'hard',
+  desc:'Employ the principle of least functionality by configuring the system to provide only essential capabilities. Disable unused functions, ports, protocols, and services.',
+  failures:['Default services left running (Telnet, FTP, SMBv1)','Unnecessary ports open on systems handling CUI','Unused software installed on CUI systems','No process to identify and disable unnecessary functionality'],
+  evidence:['System hardening documentation showing services disabled','Port scan results confirming least functionality','Software inventory with authorized software list','Configuration policy referencing least functionality'] },
+{ id:'3.4.7', domain:'CM', title:'Nonessential Programs Restriction', diff:'medium',
+  desc:'Restrict, disable, or prevent the use of programs, functions, ports, protocols, and services not required. Application whitelisting or equivalent control.',
+  failures:['No application whitelisting in place','Any software can be installed by users','Gaming, P2P software present on CUI systems','No authorized software list maintained'],
+  evidence:['Application allowlist policy','AppLocker/Windows Defender Application Control config','Authorized software list','Endpoint management console showing restricted software'] },
+{ id:'3.4.8', domain:'CM', title:'Blacklisted Software Policy', diff:'medium',
+  desc:'Apply deny-by-exception (blacklisting) policy to prevent the use of unauthorized software or deny-all/permit-by-exception (whitelisting) policy to allow the execution of authorized software.',
+  failures:['No software restriction policy','Employees freely install personal software','No monitoring for unauthorized software execution'],
+  evidence:['Software restriction policy (blacklist or whitelist)','Endpoint protection configuration','Software inventory and compliance reports'] },
+{ id:'3.4.9', domain:'CM', title:'User-Installed Software Control', diff:'medium',
+  desc:'Control and monitor user-installed software. Prevent unauthorized software installation and monitor for policy violations.',
+  failures:['Users have local admin rights allowing any software installation','No monitoring for unauthorized installations','No software approval process for user-requested software'],
+  evidence:['User rights policy restricting software installation','Software monitoring and alerting configuration','Software approval/request process documentation'] },
+
+// ── IA — Identification & Authentication (11) ─────────────
+{ id:'3.5.1', domain:'IA', title:'User Identification', diff:'easy',
+  desc:'Identify information system users, processes acting on behalf of users, and devices. Every user must have a unique identifier — no sharing accounts.',
+  failures:['Shared user accounts on CUI systems','Generic usernames (admin, user) in active use','No unique identifier policy','Service accounts shared across multiple people'],
+  evidence:['User account policy requiring unique identifiers','User account inventory','No shared account policy','Account provisioning process documentation'] },
+{ id:'3.5.2', domain:'IA', title:'User Authentication', diff:'easy',
+  desc:'Authenticate (or verify) the identities of those users, processes, and devices as a prerequisite to allowing access to organizational systems.',
+  failures:['Systems accessible without authentication','Default credentials not changed','Password-less authentication without equivalent control','No authentication on internal systems handling CUI'],
+  evidence:['Authentication policy','System configuration requiring login for all access','Password policy documentation','Authentication logs'] },
+{ id:'3.5.3', domain:'IA', title:'Multi-Factor Authentication (Privileged)', diff:'hard',
+  desc:'Use multifactor authentication for local and network access to privileged accounts. ALL privileged accounts must use MFA — password alone is insufficient.',
+  failures:['Privileged accounts (admins) using password-only authentication','MFA bypasses allowed for convenience','MFA not enforced for local privileged login','VPN admin access without MFA'],
+  evidence:['MFA enforcement policy','MFA enrollment records for all privileged accounts','Authentication system configuration showing MFA requirement','Privileged access review confirming MFA enrollment'] },
+{ id:'3.5.4', domain:'IA', title:'Multi-Factor Authentication (CUI Access)', diff:'hard',
+  desc:'Use multifactor authentication for local and network access to non-privileged accounts when such access is to non-local systems. MFA for all users accessing CUI systems remotely.',
+  failures:['Remote access to CUI without MFA for regular users','MFA only required for admins not regular CUI users','MFA not enforced for VPN or remote desktop sessions'],
+  evidence:['MFA policy covering non-privileged remote access','MFA enrollment reports for all users with remote CUI access','VPN/remote access MFA configuration'] },
+{ id:'3.5.5', domain:'IA', title:'Authenticator Management', diff:'medium',
+  desc:'Employ replay-resistant authentication mechanisms for network access to privileged and non-privileged accounts. Manage authenticators (passwords, tokens, smart cards) throughout their lifecycle.',
+  failures:['No password expiration policy','Authenticator management process not documented','Default authenticators not changed on new accounts','Expired/unused authenticators not revoked'],
+  evidence:['Authenticator management policy','Password expiration settings','Token/smart card issuance and revocation records','MFA device management procedures'] },
+{ id:'3.5.6', domain:'IA', title:'Authenticator Feedback', diff:'easy',
+  desc:'Use replay-resistant authentication mechanisms and obscure feedback of authentication information during the authentication process. Protect authenticator feedback from observation.',
+  failures:['Password displayed in plain text during entry','Authentication bypass available through configuration','Password hints that reveal too much information'],
+  evidence:['System configuration showing password field masking','Authentication system settings','Screen capture showing obscured password fields'] },
+{ id:'3.5.7', domain:'IA', title:'Password Complexity Requirements', diff:'easy',
+  desc:'Enforce a minimum password complexity and change of passwords when compromised or required. Passwords must meet minimum complexity standards.',
+  failures:['No password complexity policy enforced','Minimum length less than 12 characters','Password complexity not enforced technically','No process for forcing password change when compromised'],
+  evidence:['Password policy document','Technical password policy enforcement (GPO)','Complexity requirement configuration screenshots','HIBP or credential monitoring process'] },
+{ id:'3.5.8', domain:'IA', title:'Password Reuse Prohibition', diff:'easy',
+  desc:'Prohibit password reuse for a specified number of generations. Users should not be able to cycle back to previously used passwords.',
+  failures:['No password history enforced (users cycle through same passwords)','Password history set to fewer than 5','Password history policy not technically enforced'],
+  evidence:['Password history policy','GPO password history configuration','Technical enforcement screenshots'] },
+{ id:'3.5.9', domain:'IA', title:'Temporary Password Requirements', diff:'medium',
+  desc:'Allow temporary passwords for system logons with immediate change requirement during the next logon. Temporary passwords must be immediately changed.',
+  failures:['Temporary passwords that don\'t expire','New user accounts with generic permanent passwords','IT sets passwords for users without forcing change'],
+  evidence:['New account provisioning process requiring password change at first logon','System configuration for must-change-at-next-login','Help desk procedures for temporary passwords'] },
+{ id:'3.5.10', domain:'IA', title:'Cryptographic Protections for Passwords', diff:'medium',
+  desc:'Store and transmit only cryptographically protected passwords. Passwords must never be stored in plain text and must be transmitted only over encrypted channels.',
+  failures:['Passwords stored in plain text in configuration files','MD5 or SHA1 used for password hashing','Passwords transmitted over unencrypted connections','Legacy systems storing passwords in reversible encryption'],
+  evidence:['Password hashing algorithm configuration (bcrypt, PBKDF2, Argon2)','Encrypted transmission configuration (TLS)','Authentication system technical documentation'] },
+{ id:'3.5.11', domain:'IA', title:'Obscure Authenticator Feedback', diff:'easy',
+  desc:'Obscure feedback of authentication information during the authentication process to protect the information from possible exploitation/use by unauthorized individuals.',
+  failures:['Password visible during entry','Authentication tokens displayed longer than necessary','Screen shoulder-surfing possible due to feedback'],
+  evidence:['Login form configuration showing masked password input','System policy for session display settings'] },
+
+// ── IR — Incident Response (3) ────────────────────────────
+{ id:'3.6.1', domain:'IR', title:'Incident Response Capability', diff:'medium',
+  desc:'Establish an operational incident-handling capability for organizational systems that includes preparation, detection, analysis, containment, recovery, and user response activities.',
+  failures:['No written incident response plan','IR plan not tested (no tabletop exercises)','No IR team or designated responders','IR plan doesn\'t address CUI breaches specifically'],
+  evidence:['Incident response plan document','IR team roster and contact list','Tabletop exercise records','IR training records for designated personnel'] },
+{ id:'3.6.2', domain:'IR', title:'Incident Tracking & Reporting', diff:'medium',
+  desc:'Track, document, and report incidents to appropriate organizational officials and/or authorities. Incidents must be tracked to closure and reported per DFARS requirements.',
+  failures:['No incident ticketing or tracking system','DFARS 252.204-7012 reporting requirements not documented','Incidents not reported to DoD within required 72-hour window','No post-incident review process'],
+  evidence:['Incident tracking system or log','DFARS 72-hour reporting procedure','Incident report templates','Past incident reports demonstrating tracking'] },
+{ id:'3.6.3', domain:'IR', title:'Incident Response Testing', diff:'hard',
+  desc:'Test the organizational incident response capability. Conduct exercises to validate incident response procedures, team readiness, and detection/response times.',
+  failures:['No tabletop exercises conducted in past year','No technical tests of detection and response capabilities','IR plan never validated against real-world scenarios','No metrics collected on response time or effectiveness'],
+  evidence:['Tabletop exercise plans and after-action reports','Annual IR test schedule','Exercise results with lessons learned','Updated IR plan following test findings'] },
+
+// ── MA — Maintenance (6) ──────────────────────────────────
+{ id:'3.7.1', domain:'MA', title:'System Maintenance', diff:'easy',
+  desc:'Perform maintenance on organizational information systems. Establish and follow a maintenance schedule for all systems handling CUI.',
+  failures:['No documented maintenance schedule','Systems running without vendor-supported patching','No tracking of maintenance activities','Maintenance performed without authorization'],
+  evidence:['Maintenance policy and schedule','Maintenance log or ticketing records','Patch management reports','Maintenance approval records'] },
+{ id:'3.7.2', domain:'MA', title:'Controlled Maintenance', diff:'medium',
+  desc:'Provide controls on the tools, techniques, mechanisms, and personnel that conduct maintenance. Maintenance must be authorized, monitored, and logged.',
+  failures:['Maintenance performed without logging who did what','External technicians given unescorted access','Maintenance tools not inventoried or controlled','Remote maintenance sessions not monitored'],
+  evidence:['Maintenance authorization records','Escorted access records for external technicians','Maintenance tool inventory','Remote maintenance session logs'] },
+{ id:'3.7.3', domain:'MA', title:'Equipment Sanitization', diff:'medium',
+  desc:'Ensure equipment removed for outside maintenance is sanitized of any CUI. Before sending equipment offsite for maintenance, ensure CUI is removed or encrypted.',
+  failures:['Equipment with CUI sent for repair without sanitization','No data sanitization procedure for maintenance returns','Sanitization methods not documented or verified'],
+  evidence:['Equipment sanitization procedures','Sanitization records for equipment sent offsite','Media sanitization policy referencing maintenance scenarios'] },
+{ id:'3.7.4', domain:'MA', title:'Media Inspection After Maintenance', diff:'medium',
+  desc:'Check media containing diagnostic and test programs for malicious code before the media are used in the information system. Equipment returned from maintenance must be inspected.',
+  failures:['No inspection process for equipment returning from maintenance','Malware scan not performed on returned equipment','No policy for external media brought in by maintenance technicians'],
+  evidence:['Media inspection procedure','Malware scan records for returned equipment','Maintenance technician tool control policy'] },
+{ id:'3.7.5', domain:'MA', title:'Multifactor Authentication for Remote Maintenance', diff:'medium',
+  desc:'Require MFA to establish remote maintenance sessions and terminate such sessions after maintenance is complete. Remote maintenance gets the same MFA requirements as regular access.',
+  failures:['Remote maintenance performed without MFA','Vendor remote access using shared credentials','Remote maintenance sessions not terminated when complete','Permanent vendor backdoors left open'],
+  evidence:['Remote maintenance access policy requiring MFA','Vendor access management procedures','Remote session termination procedures','MFA enforcement configuration for vendor access'] },
+{ id:'3.7.6', domain:'MA', title:'Maintenance Personnel Control', diff:'medium',
+  desc:'Supervise the maintenance activities of maintenance personnel without required access authorization. Contractors doing maintenance must be supervised if they don\'t have security clearance.',
+  failures:['Unsupervised access given to uncleared maintenance contractors','No vetting process for maintenance personnel','CUI left visible during maintenance by unauthorized persons'],
+  evidence:['Maintenance personnel vetting process','Escort/supervision records for uncleared personnel','CUI protection procedures during maintenance','Maintenance contractor agreement/NDA records'] },
+
+// ── MP — Media Protection (9) ─────────────────────────────
+{ id:'3.8.1', domain:'MP', title:'Media Access Control', diff:'medium',
+  desc:'Protect (i.e., physically control and securely store) information system media containing CUI, both paper and digital, during storage and transport.',
+  failures:['CUI media left unprotected in unsecured areas','No locked storage for physical CUI documents','USB drives with CUI not tracked or secured','No physical security for server room containing CUI'],
+  evidence:['Media protection policy','Physical security controls documentation','CUI media inventory and storage location records','Locked storage evidence (photos, policy)'] },
+{ id:'3.8.2', domain:'MP', title:'Media Access Limitation', diff:'medium',
+  desc:'Limit access to CUI on system media to authorized users. Control who can access media containing CUI and maintain access logs.',
+  failures:['CUI accessible to all employees on shared drives','No access controls on CUI file shares','Printed CUI not controlled after printing','No record of who accessed CUI media'],
+  evidence:['File share access control configuration','CUI data access logs','Print management controls','Physical media access log'] },
+{ id:'3.8.3', domain:'MP', title:'Media Sanitization', diff:'hard',
+  desc:'Sanitize or destroy information system media before disposal or reuse. Use NIST SP 800-88 guidance for sanitization — deletion alone is not sufficient.',
+  failures:['Hard drives disposed of without sanitization (just deleted)','No sanitization policy or procedure','Unknown what sanitization method was used','Recycled equipment still containing CUI data'],
+  evidence:['Media sanitization policy referencing NIST SP 800-88','Sanitization records with method, tool, and verification','Certificate of destruction for destroyed media','Sanitization software licenses and usage logs'] },
+{ id:'3.8.4', domain:'MP', title:'Media Marking', diff:'easy',
+  desc:'Mark media with necessary CUI markings and distribution limitations. Physical and digital media containing CUI must be labeled/marked accordingly.',
+  failures:['CUI documents not marked as CUI','No labeling policy for CUI media','Electronic files without CUI markings','USB drives with CUI not labeled'],
+  evidence:['CUI marking policy','Sample marked documents and media','CUI marking training records','Digital file naming/metadata convention for CUI'] },
+{ id:'3.8.5', domain:'MP', title:'Media Accountability', diff:'medium',
+  desc:'Control access to media containing CUI and maintain accountability for media during transport. Track media throughout its lifecycle.',
+  failures:['No inventory of CUI media','Media transported without tracking','No chain of custody for CUI media in transit','Lost or missing media incidents with no process'],
+  evidence:['CUI media inventory system','Media transport tracking records','Chain of custody procedures','Media receipt/return logs'] },
+{ id:'3.8.6', domain:'MP', title:'Media Transportation Protection', diff:'medium',
+  desc:'Implement cryptographic mechanisms to protect the confidentiality of CUI during transport unless otherwise protected by alternative physical safeguards.',
+  failures:['CUI transported on unencrypted USB drives','Printed CUI mailed without tamper-evident packaging','Laptops with CUI shipped without full-disk encryption','No encryption requirement for media transport'],
+  evidence:['Media transport encryption policy','Full-disk encryption deployment records','Secure courier procedures for physical media','Encryption verification for transported media'] },
+{ id:'3.8.7', domain:'MP', title:'Removable Media Control', diff:'medium',
+  desc:'Control the use of removable media on system components. Restrict which devices can use removable media and what media can be connected.',
+  failures:['No USB port control — any USB device can connect','No policy on authorized removable media','Employees bringing personal USB drives to work','No monitoring of removable media usage'],
+  evidence:['Removable media policy','USB port control configuration (GPO, endpoint solution)','Authorized removable media inventory','Device control software reports'] },
+{ id:'3.8.8', domain:'MP', title:'Removable Media Prohibition', diff:'medium',
+  desc:'Prohibit the use of portable storage devices when such devices have no identifiable owner. Unknown or unidentified media should never be connected to organizational systems.',
+  failures:['Employees plug in found or unknown USB drives','No training on unknown media dangers','No detection capability for unknown/unauthorized media'],
+  evidence:['Policy prohibiting unidentified media','Security awareness training content on USB risks','Endpoint detection capability for unauthorized media','Incident response procedure for unknown media'] },
+{ id:'3.8.9', domain:'MP', title:'Media Protection During Backup', diff:'medium',
+  desc:'Protect the confidentiality of backup CUI at storage locations. Backup media receives the same protection as primary CUI media.',
+  failures:['Backups stored without encryption','Backup storage not physically secured','Offsite backup media unprotected in transit','Cloud backups without encryption'],
+  evidence:['Backup policy requiring encryption','Backup encryption configuration','Offsite backup storage security documentation','Cloud backup encryption settings'] },
+
+// ── PS — Personnel Security (2) ───────────────────────────
+{ id:'3.9.1', domain:'PS', title:'Personnel Screening', diff:'medium',
+  desc:'Screen individuals prior to authorizing access to organizational systems containing CUI. Background checks appropriate to the sensitivity of the information being accessed.',
+  failures:['No background check process for employees with CUI access','Background checks not performed before CUI access granted','No rescreening process for long-term employees','Contractor background checks not verified'],
+  evidence:['Personnel screening policy','Background check records for CUI-access personnel','Contractor vetting documentation','Rescreening schedule or trigger-based process'] },
+{ id:'3.9.2', domain:'PS', title:'Personnel Termination & Transfer', diff:'easy',
+  desc:'Ensure that organizational systems are protected during and after personnel actions such as terminations and transfers. Immediately revoke access when employees depart.',
+  failures:['Former employees retain system access after departure','No documented offboarding procedure','Access not revoked on termination day','CUI-handling knowledge transferred improperly during transitions'],
+  evidence:['Offboarding policy and checklist','Account termination records and timestamps','Transfer access modification records','IT offboarding ticket samples'] },
+
+// ── PE — Physical Protection (6) ─────────────────────────
+{ id:'3.10.1', domain:'PE', title:'Physical Access Limits', diff:'medium',
+  desc:'Limit physical access to organizational information systems, equipment, and the respective operating environments to authorized individuals.',
+  failures:['Server room accessible to all employees','No key card or PIN access control for CUI areas','Tailgating allowed through secure doors','No physical access control for network equipment'],
+  evidence:['Physical access control policy','Access control system configuration','Authorized personnel list for secure areas','Physical access logs'] },
+{ id:'3.10.2', domain:'PE', title:'Physical Access Audit Logs', diff:'medium',
+  desc:'Protect and monitor the physical facility and support infrastructure for organizational information systems. Maintain audit logs of physical access.',
+  failures:['No physical access logging system','Access logs not retained or reviewed','No security cameras covering CUI areas','Physical access logs not protected from tampering'],
+  evidence:['Physical access audit log system','Log retention records','Security camera coverage documentation','Physical access log review process'] },
+{ id:'3.10.3', domain:'PE', title:'Visitor Access Escort & Monitoring', diff:'easy',
+  desc:'Escort visitors and monitor visitor activity in areas where CUI is present. Visitors never unescorted in areas with CUI access.',
+  failures:['Visitors left unescorted in areas with CUI systems','No visitor sign-in/sign-out log','Visitor badges not distinguishable from employee badges','Visitors allowed to access CUI systems unmonitored'],
+  evidence:['Visitor management policy','Visitor log records','Visitor badge system documentation','Escort procedures documentation'] },
+{ id:'3.10.4', domain:'PE', title:'Physical Access Device Maintenance', diff:'medium',
+  desc:'Maintain audit logs of physical access. Control and manage physical access devices such as keys, combinations, and card readers.',
+  failures:['Physical keys not tracked or inventoried','Old employees retain building access keys','No lock combination change process when personnel depart','Physical access device audit not performed'],
+  evidence:['Physical access device inventory','Key management procedures','Lock combination change records','Badge/card issuance and revocation records'] },
+{ id:'3.10.5', domain:'PE', title:'Physical Access Device Control', diff:'medium',
+  desc:'Control and manage physical access devices. Physical access devices (keys, badges, tokens) must be managed with accountability for issuance and return.',
+  failures:['No inventory of who has which physical access devices','Lost keys not reported or locks not re-keyed','Contractor badges not collected upon contract end','No process for reporting lost/stolen physical credentials'],
+  evidence:['Physical access device issuance log','Lost/stolen device reporting procedure','Contractor access device return records','Annual physical access audit records'] },
+{ id:'3.10.6', domain:'PE', title:'Alternative Work Site Protection', diff:'medium',
+  desc:'Enforce safeguarding measures for CUI at alternate work sites (e.g., telework). Work from home must have equivalent protections as the office.',
+  failures:['No remote work security policy','Employees working with CUI in public locations','No VPN requirement for home CUI access','Household members with access to CUI screens or documents'],
+  evidence:['Remote/telework security policy','Telework agreement with security requirements signed by employees','VPN enforcement for remote CUI access','Work from home security checklist'] },
+
+// ── RA — Risk Assessment (3) ──────────────────────────────
+{ id:'3.11.1', domain:'RA', title:'Risk Assessment', diff:'hard',
+  desc:'Periodically assess the risk to organizational operations, assets, and individuals resulting from the operation of organizational systems and the associated processing, storage, or transmission of CUI.',
+  failures:['No formal risk assessment ever performed','Risk assessment not reviewed annually','Risk assessment doesn\'t cover all CUI processing systems','No documentation of risk acceptance decisions'],
+  evidence:['Risk assessment report','Annual risk assessment schedule','Risk assessment methodology documentation','Risk acceptance records and approvals'] },
+{ id:'3.11.2', domain:'RA', title:'Vulnerability Scanning', diff:'hard',
+  desc:'Scan for vulnerabilities in organizational systems and applications periodically and when new vulnerabilities potentially affecting those systems are identified.',
+  failures:['No vulnerability scanning program in place','Scans not performed on all CUI systems','Scan frequency insufficient (less than quarterly)','Scan results not reviewed or acted upon'],
+  evidence:['Vulnerability scanning policy','Vulnerability scanner configuration','Scan results reports (last 4 quarters)','Remediation tracking records'] },
+{ id:'3.11.3', domain:'RA', title:'Vulnerability Remediation', diff:'hard',
+  desc:'Remediate vulnerabilities in accordance with risk assessments. Vulnerabilities must be addressed within defined timeframes based on severity.',
+  failures:['No SLA for critical vulnerability patching','High-severity vulnerabilities open for more than 30 days','No tracking of open vulnerabilities to closure','Patch management and vulnerability remediation not linked'],
+  evidence:['Vulnerability remediation policy with SLAs by severity','Open vulnerability tracking report','Patch deployment records','Closed vulnerability records with dates'] },
+
+// ── CA — Security Assessment (4) ─────────────────────────
+{ id:'3.12.1', domain:'CA', title:'Security Control Assessment', diff:'hard',
+  desc:'Periodically assess the security controls in organizational systems to determine if the controls are effective in their application.',
+  failures:['No internal security assessment performed','Security controls never validated technically','Assessment only based on documentation review (no testing)','Gaps identified but not remediated'],
+  evidence:['Security assessment plan','Assessment methodology documentation','Assessment results report','Evidence of validated controls (testing artifacts)'] },
+{ id:'3.12.2', domain:'CA', title:'Plan of Action & Milestones (POA&M)', diff:'hard',
+  desc:'Develop and implement plans of action designed to correct deficiencies and reduce or eliminate vulnerabilities in organizational systems. The POA&M is a living document.',
+  failures:['No POA&M document maintained','POA&M not updated after assessments','Milestones missed with no re-planning','POA&M not linked to SPRS score submission'],
+  evidence:['Active POA&M with identified gaps, milestones, and owners','POA&M update history','POA&M review meeting records','SPRS score submission records referencing POA&M'] },
+{ id:'3.12.3', domain:'CA', title:'System Security Plan (SSP)', diff:'hard',
+  desc:'Monitor information system security controls on an ongoing basis to ensure the continued effectiveness of the controls — and maintain a System Security Plan.',
+  failures:['No SSP document maintained','SSP not updated after system changes','SSP doesn\'t cover all CUI processing systems','SSP lacks required elements (boundary, components, control descriptions)'],
+  evidence:['Current SSP document','SSP update history/version control','SSP review and approval records','System boundary diagram within SSP'] },
+{ id:'3.12.4', domain:'CA', title:'Continuous Monitoring', diff:'hard',
+  desc:'Develop, document, and periodically update system security plans that describe system boundaries, system environments of operation, how security requirements are implemented, and relationships with or connections to other systems.',
+  failures:['Monitoring ad-hoc rather than systematic','No defined monitoring frequency for each control type','Security metrics not tracked over time','No automated monitoring capabilities'],
+  evidence:['Continuous monitoring strategy document','Monitoring frequency definitions by control type','Security metrics dashboard or reports','Automated monitoring tool configuration'] },
+
+// ── SC — System & Comms Protection (16) ──────────────────
+{ id:'3.13.1', domain:'SC', title:'Network Boundary Protection', diff:'medium',
+  desc:'Monitor, control, and protect communications at the external boundaries and key internal boundaries of the system. Firewalls, DMZs, and boundary protection devices.',
+  failures:['No firewall between internet and CUI systems','Internal network not segmented from CUI data','No network monitoring at boundaries','All traffic permitted outbound by default'],
+  evidence:['Network architecture diagram showing boundary protection','Firewall configuration and ruleset','DMZ design documentation','Network monitoring/IDS configuration'] },
+{ id:'3.13.2', domain:'SC', title:'Security Architecture', diff:'hard',
+  desc:'Employ architectural designs, software development techniques, and systems engineering principles that promote information security within organizational systems.',
+  failures:['No security architecture documentation','Security not considered in system design','Legacy architecture with known security weaknesses not addressed','No secure SDLC process'],
+  evidence:['Security architecture documentation','Security in design principles documentation','Architectural review records','SDLC security integration evidence'] },
+{ id:'3.13.3', domain:'SC', title:'Role Separation in System Design', diff:'medium',
+  desc:'Separate user functionality from system management functionality. Administrative interfaces should be separate from user-facing interfaces.',
+  failures:['Admin and user interfaces on same system without separation','Management plane accessible from user network','Administrative functions exposed to regular users'],
+  evidence:['Architecture documentation showing role separation','Out-of-band management network configuration','Administrative access control documentation'] },
+{ id:'3.13.4', domain:'SC', title:'Shared Resource Protection', diff:'medium',
+  desc:'Prevent unauthorized and unintended information transfer via shared system resources. Shared resources (memory, storage, cache) must not leak CUI between users or processes.',
+  failures:['No memory protection between processes','Shared storage accessible to unauthorized users','Cache poisoning vulnerabilities not addressed','Virtual machine isolation not verified'],
+  evidence:['Operating system configuration for resource isolation','Virtual machine isolation policy','Application security configuration preventing resource sharing'] },
+{ id:'3.13.5', domain:'SC', title:'Public Network Communication Protection', diff:'medium',
+  desc:'Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks. DMZ implementation.',
+  failures:['No DMZ for public-facing services','Public web servers on same network as CUI systems','No network segmentation between internet-accessible and internal systems'],
+  evidence:['Network diagram showing DMZ','Firewall rules separating DMZ from internal network','Public-facing system inventory and location'] },
+{ id:'3.13.6', domain:'SC', title:'Deny by Default Network Communications', diff:'medium',
+  desc:'Deny network communications traffic by default and allow network communications traffic by exception (i.e., deny all, permit by exception).',
+  failures:['Firewall allows all traffic by default','Outbound filtering not implemented','Any-to-any rules in firewall','No justification for allowed traffic'],
+  evidence:['Firewall configuration showing default deny','Firewall ruleset with documented justification','Egress filtering configuration','Network communication policy'] },
+{ id:'3.13.7', domain:'SC', title:'Remote Device Split Tunneling Prevention', diff:'medium',
+  desc:'Prevent remote devices from simultaneously connecting to the organization\'s systems using split tunneling unless the split tunnel connection is explicitly documented and approved.',
+  failures:['VPN split tunneling enabled without review','Remote users accessing internet while on VPN (bypassing controls)','Split tunneling not documented or approved'],
+  evidence:['VPN configuration showing split tunneling disabled or documented','Split tunneling approval records if permitted','VPN policy documentation'] },
+{ id:'3.13.8', domain:'SC', title:'Transmission Encryption', diff:'medium',
+  desc:'Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission unless otherwise protected by alternative physical safeguards.',
+  failures:['Unencrypted protocols transmitting CUI (HTTP, FTP, Telnet)','Weak encryption suites permitted (RC4, DES, MD5)','No TLS version minimum enforced','CUI transmitted via unencrypted email'],
+  evidence:['Encryption policy for CUI in transit','TLS configuration and minimum version enforcement','Prohibited protocol list and technical enforcement','Email encryption configuration for CUI'] },
+{ id:'3.13.9', domain:'SC', title:'Network Disconnection on Session End', diff:'easy',
+  desc:'Terminate network connections associated with communications sessions after a defined period of inactivity or at the end of a session.',
+  failures:['Network connections not terminated after session ends','No inactivity timeout on network sessions','VPN sessions persist indefinitely'],
+  evidence:['Network session timeout policy','VPN inactivity timeout configuration','Router/switch session timeout settings'] },
+{ id:'3.13.10', domain:'SC', title:'CUI At-Rest Encryption Key Management', diff:'hard',
+  desc:'Establish and manage cryptographic keys for required cryptography employed in organizational systems — specifically for protecting CUI at rest.',
+  failures:['No key management process documented','Encryption keys stored alongside encrypted data','Keys not rotated on a defined schedule','Key escrow process not established'],
+  evidence:['Key management policy','Key management system configuration','Key rotation schedule and records','Key escrow/recovery procedures'] },
+{ id:'3.13.11', domain:'SC', title:'FIPS-Validated Cryptography', diff:'hard',
+  desc:'Employ FIPS-validated cryptography when used to protect the confidentiality of CUI. Cryptographic modules must be FIPS 140-2 or 140-3 validated.',
+  failures:['Non-FIPS validated cryptographic modules in use','VPN using non-FIPS approved algorithms','Custom cryptography instead of FIPS-validated modules','Operating in non-FIPS mode on Windows systems'],
+  evidence:['FIPS 140-2/140-3 validated module certificates','Windows FIPS mode configuration','VPN FIPS-compliant configuration','Cryptographic module inventory with FIPS validation numbers'] },
+{ id:'3.13.12', domain:'SC', title:'Collaborative Computing Device Prohibition', diff:'medium',
+  desc:'Prohibit remote activation of collaborative computing devices and provide indication of use to present users. Cameras, microphones, and video systems in CUI areas must be controlled.',
+  failures:['Webcams active in CUI processing areas without controls','Smart speakers (Alexa, Google Home) in CUI areas','No policy on collaborative computing in secure areas','Remote activation of cameras/microphones possible'],
+  evidence:['Collaborative computing device policy','Physical controls on cameras/microphones in CUI areas','Smart device policy for secure areas','Technical controls preventing remote activation'] },
+{ id:'3.13.13', domain:'SC', title:'Mobile Code Control', diff:'medium',
+  desc:'Control and monitor the use of mobile code. Define acceptable and unacceptable mobile code technologies — and take action to ensure that only acceptable mobile code is used.',
+  failures:['No mobile code policy documented','JavaScript/ActiveX/Java applets not controlled in browsers','Mobile code executed without authorization control','No monitoring for unauthorized mobile code'],
+  evidence:['Mobile code policy','Browser configuration restricting unauthorized mobile code','Web filtering configuration','Mobile code authorization list'] },
+{ id:'3.13.14', domain:'SC', title:'Voice over IP Control', diff:'medium',
+  desc:'Control and monitor the use of Voice over Internet Protocol (VoIP) technologies. VoIP systems must be assessed and approved before connecting to organizational networks.',
+  failures:['Unauthorized VoIP applications in use','VoIP traffic not separated from CUI data traffic','No security assessment of VoIP systems','Consumer VoIP apps (Skype, Zoom personal) uncontrolled'],
+  evidence:['VoIP authorization policy','Approved VoIP technology list','VoIP network segmentation documentation','VoIP system security assessment'] },
+{ id:'3.13.15', domain:'SC', title:'Communication Authenticity', diff:'medium',
+  desc:'Protect the authenticity of communications sessions. Use mechanisms such as TLS, HTTPS, and digital signatures to protect session integrity and authenticity.',
+  failures:['Web applications using HTTP instead of HTTPS','No certificate validation for communications','Self-signed certificates without proper management','Session hijacking vulnerabilities in web applications'],
+  evidence:['HTTPS enforcement policy','TLS certificate management process','Valid certificate inventory','HTTPS configuration on all CUI web applications'] },
+{ id:'3.13.16', domain:'SC', title:'CUI At-Rest Protection', diff:'hard',
+  desc:'Protect the confidentiality of CUI at rest. CUI must be encrypted or physically protected when stored.',
+  failures:['CUI stored without encryption on servers','No full-disk encryption on laptops','Database containing CUI without encryption','CUI in unprotected cloud storage'],
+  evidence:['At-rest encryption policy','BitLocker/FileVault/LUKS deployment records','Database encryption configuration','Cloud storage encryption settings and verification'] },
+
+// ── SI — System & Info Integrity (7) ─────────────────────
+{ id:'3.14.1', domain:'SI', title:'Flaw Remediation', diff:'hard',
+  desc:'Identify, report, and correct information and information system flaws in a timely manner. Patch management program with defined SLAs by severity.',
+  failures:['No formal patch management process','Patches applied inconsistently or infrequently','Critical patches taking more than 30 days to apply','No tracking of patch compliance across all systems'],
+  evidence:['Patch management policy with SLAs','Vulnerability/patch tracking report','Patch deployment records for past 12 months','Patch compliance dashboard or reports'] },
+{ id:'3.14.2', domain:'SI', title:'Malicious Code Protection', diff:'easy',
+  desc:'Provide protection from malicious code at appropriate locations within the organizational information system. Antivirus/EDR on endpoints and gateway anti-malware.',
+  failures:['No antivirus/EDR deployed on endpoints','Antivirus definitions not kept current (>24 hours old)','Email gateway without anti-malware scanning','No endpoint detection and response (EDR) capability'],
+  evidence:['Endpoint protection deployment records','AV definition update configuration and logs','Email gateway anti-malware configuration','EDR coverage report showing all endpoints protected'] },
+{ id:'3.14.3', domain:'SI', title:'Security Alert Monitoring', diff:'hard',
+  desc:'Monitor information system security alerts and advisories and take appropriate actions in response. Subscribe to threat intelligence and act on security advisories.',
+  failures:['No subscription to security alert sources (US-CERT, vendor advisories)','Security advisories received but not acted upon','No process for evaluating and responding to advisories','Alerts not assigned to a responsible person'],
+  evidence:['Security alert subscription documentation (US-CERT, CISA alerts)','Alert review and response process','Records of actions taken on recent advisories','Responsible person designation for alert handling'] },
+{ id:'3.14.4', domain:'SI', title:'Malicious Code Update Frequency', diff:'easy',
+  desc:'Update malicious code protection mechanisms as new releases are available. Ensure antivirus signatures and engine updates are applied promptly.',
+  failures:['AV definitions older than 24 hours','No automated update mechanism configured','AV engine version significantly behind current release','Signature update failures not detected or alerted'],
+  evidence:['AV update policy requiring frequency (daily/automatic)','AV management console showing update status','AV update failure alerting configuration','Endpoint report showing definition age'] },
+{ id:'3.14.5', domain:'SI', title:'System Scanning', diff:'hard',
+  desc:'Perform periodic scans of the information system and real-time scans of files from external sources as files are downloaded, opened, or executed.',
+  failures:['Full system scans not scheduled','Real-time scanning disabled for performance','External files scanned at gateway but not endpoint','USB files not scanned before execution'],
+  evidence:['AV/EDR configuration showing periodic scan schedule','Real-time scan configuration settings','External file scanning policy','Scan results history reports'] },
+{ id:'3.14.6', domain:'SI', title:'Security Monitoring', diff:'hard',
+  desc:'Monitor the organizational information system to detect attacks and indicators of potential attacks in accordance with monitoring objectives, and identify unauthorized use of the information system.',
+  failures:['No SIEM or centralized log monitoring','No IDS/IPS deployed on network','Anomalous user behavior not detected','No threat hunting activities performed'],
+  evidence:['SIEM deployment and configuration','IDS/IPS deployment records','Network monitoring coverage documentation','Threat detection rule documentation'] },
+{ id:'3.14.7', domain:'SI', title:'Unauthorized Use Identification', diff:'hard',
+  desc:'Identify unauthorized use of organizational information systems. Detect and respond to indicators of unauthorized access or misuse.',
+  failures:['No baseline of normal behavior established','No user and entity behavior analytics (UEBA)','Unauthorized access not detectable until reported by users','No process for investigating suspicious activity'],
+  evidence:['Behavioral baseline documentation','UEBA or anomaly detection configuration','Unauthorized access investigation procedures','Records of detected and investigated anomalies'] },
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let statusMap = JSON.parse(localStorage.getItem('ckpt-status') || '{}');
+let selectedDomain = 'all';
+let selectedStatus = 'all';
+let expandedCards = new Set();
+
+function saveStatus() {
+  localStorage.setItem('ckpt-status', JSON.stringify(statusMap));
+}
+
+// ═══════════════════════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════════════════════
+function setDomainFilter(code, btn) {
+  selectedDomain = code;
+  document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function setStatusFilter(status, btn) {
+  selectedStatus = status;
+  document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function getFiltered() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const diff = document.getElementById('diffFilter').value;
+  return CONTROLS.filter(c => {
+    const domainOk = selectedDomain === 'all' || c.domain === selectedDomain;
+    const statusOk = selectedStatus === 'all' || (statusMap[c.id] || 'not-started') === selectedStatus;
+    const diffOk = diff === 'all' || c.diff === diff;
+    const qOk = !q || c.id.toLowerCase().includes(q) || c.title.toLowerCase().includes(q) ||
+                c.desc.toLowerCase().includes(q) || c.failures.some(f=>f.toLowerCase().includes(q)) ||
+                c.evidence.some(e=>e.toLowerCase().includes(q));
+    return domainOk && statusOk && diffOk && qOk;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function statusLabel(s) {
+  const m = { 'implemented':'✅ Done','in-progress':'🔄 Progress','not-started':'❌ Gap','na':'⬜ N/A' };
+  return m[s] || '❌ Gap';
+}
+
+function statusClass(s) {
+  const m = { 'implemented':'s-implemented','in-progress':'s-in-progress','not-started':'s-not-started','na':'s-na' };
+  return m[s] || 's-not-started';
+}
+
+function diffLabel(d) {
+  const m = { easy:'Easy', medium:'Medium', hard:'Hard' };
+  return m[d] || d;
+}
+
+function diffClass(d) {
+  const m = { easy:'diff-easy', medium:'diff-medium', hard:'diff-hard' };
+  return m[d] || '';
+}
+
+function controlCardHTML(c) {
+  const st = statusMap[c.id] || 'not-started';
+  const isExpanded = expandedCards.has(c.id);
+  return `
+    <div class="control-card ${isExpanded?'expanded':''}" data-status="${st}" id="card-${c.id}">
+      <div class="card-inner">
+        <div class="card-top-row">
+          <div class="control-id">${c.id}</div>
+          <div class="control-title">${c.title}</div>
+          <select class="status-select ${statusClass(st)}" onchange="setStatus('${c.id}', this.value, this)">
+            <option value="not-started" ${st==='not-started'?'selected':''}>❌ Gap</option>
+            <option value="in-progress" ${st==='in-progress'?'selected':''}>🔄 Progress</option>
+            <option value="implemented" ${st==='implemented'?'selected':''}>✅ Done</option>
+            <option value="na" ${st==='na'?'selected':''}>⬜ N/A</option>
+          </select>
+        </div>
+        <div class="control-desc">${c.desc}</div>
+        <div class="card-bottom-row">
+          <span class="difficulty-badge ${diffClass(c.diff)}">${diffLabel(c.diff)}</span>
+          <button class="card-toggle-btn" onclick="toggleCard('${c.id}')">
+            ${isExpanded ? '▲ HIDE DETAILS' : '▼ FAILURE POINTS & EVIDENCE'}
+          </button>
+          <span class="nist-ref">NIST 800-171r2 §${c.id}</span>
+        </div>
+        <div class="card-details">
+          <div class="details-section">
+            <div class="details-label">⚠ Common Failure Points</div>
+            <div class="failure-items">${c.failures.map(f=>`<div class="failure-item">${f}</div>`).join('')}</div>
+          </div>
+          <div class="details-section">
+            <div class="details-label">▸ Key Evidence to Collect</div>
+            <div class="evidence-items">${c.evidence.map(e=>`<div class="evidence-item">${e}</div>`).join('')}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderAll() {
+  const filtered = getFiltered();
+  const container = document.getElementById('controlsContainer');
+  document.getElementById('visibleCount').textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty-state">⬛ No controls match your filters.</div>';
+    return;
+  }
+
+  const grouped = {};
+  filtered.forEach(c => { if (!grouped[c.domain]) grouped[c.domain] = []; grouped[c.domain].push(c); });
+  const domainOrder = DOMAINS.map(d => d.code);
+
+  let html = '';
+  domainOrder.forEach(code => {
+    if (!grouped[code]) return;
+    const d = DOMAINS.find(x => x.code === code);
+    const total = grouped[code].length;
+    const totalInDomain = CONTROLS.filter(c => c.domain === code).length;
+    const implInDomain = CONTROLS.filter(c => c.domain === code && (statusMap[c.id] || 'not-started') === 'implemented').length;
+    const pct = totalInDomain > 0 ? Math.round(implInDomain / totalInDomain * 100) : 0;
+
+    html += `
+      <div class="domain-section" id="dsec-${code}">
+        <div class="domain-header" onclick="toggleSection('${code}')">
+          <div class="domain-header-code">${code}</div>
+          <div class="domain-header-info">
+            <div class="domain-header-name">${d.name}</div>
+            <div class="domain-header-sub">${d.desc.substring(0,90)}...</div>
+          </div>
+          <div class="domain-header-meta">
+            <div class="domain-control-count">${total}</div>
+            <div class="domain-control-label">Controls</div>
+            <div class="domain-prog-row">
+              <div class="domain-prog-bar"><div class="domain-prog-fill" style="width:${pct}%"></div></div>
+              <span class="domain-prog-pct">${pct}%</span>
+            </div>
+          </div>
+          <span class="collapse-icon">▼</span>
+        </div>
+        <div class="controls-grid">
+          ${grouped[code].map(c => controlCardHTML(c)).join('')}
+        </div>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+  updateStats();
+}
+
+function toggleSection(code) {
+  document.getElementById('dsec-'+code).classList.toggle('collapsed');
+}
+
+function collapseAll() {
+  document.querySelectorAll('.domain-section').forEach(s => s.classList.add('collapsed'));
+}
+
+function expandAll() {
+  document.querySelectorAll('.domain-section').forEach(s => s.classList.remove('collapsed'));
+}
+
+function toggleCard(id) {
+  if (expandedCards.has(id)) expandedCards.delete(id);
+  else expandedCards.add(id);
+  const card = document.getElementById('card-'+id);
+  if (!card) return;
+  card.classList.toggle('expanded', expandedCards.has(id));
+  const btn = card.querySelector('.card-toggle-btn');
+  if (btn) btn.textContent = expandedCards.has(id) ? '▲ HIDE DETAILS' : '▼ FAILURE POINTS & EVIDENCE';
+}
+
+// ═══════════════════════════════════════════════════════════
+// STATUS UPDATES
+// ═══════════════════════════════════════════════════════════
+function setStatus(id, val, selectEl) {
+  statusMap[id] = val;
+  saveStatus();
+
+  const card = document.getElementById('card-'+id);
+  if (card) {
+    card.setAttribute('data-status', val);
+    selectEl.className = 'status-select ' + statusClass(val);
+  }
+
+  updateStats();
+  updateDomainNav();
+  showToast(val === 'implemented' ? `✅ ${id} marked complete!` : `${id} updated`);
+}
+
+function updateStats() {
+  const impl = CONTROLS.filter(c => statusMap[c.id] === 'implemented').length;
+  const prog = CONTROLS.filter(c => statusMap[c.id] === 'in-progress').length;
+  const notS = CONTROLS.filter(c => (statusMap[c.id] || 'not-started') === 'not-started').length;
+  const na   = CONTROLS.filter(c => statusMap[c.id] === 'na').length;
+
+  document.getElementById('sprsScore').textContent = impl;
+  document.getElementById('countImpl').textContent = impl;
+  document.getElementById('countProg').textContent = prog;
+  document.getElementById('countNot').textContent = notS;
+  document.getElementById('countNA').textContent = na;
+
+  const pct = impl / 110 * 100;
+  const fill = document.getElementById('sprsBarFill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct < 40 ? 'var(--red)' : pct < 70 ? 'var(--amber)' : 'var(--green)';
+
+  const score = document.getElementById('sprsScore');
+  score.style.color = pct < 40 ? 'var(--red)' : pct < 70 ? 'var(--amber)' : 'var(--green-bright)';
+
+  // Update domain progress bars in sidebar
+  const dpb = document.getElementById('domainProgressBars');
+  if (dpb) {
+    dpb.innerHTML = DOMAINS.map(d => {
+      const total = CONTROLS.filter(c => c.domain === d.code).length;
+      const done = CONTROLS.filter(c => c.domain === d.code && statusMap[c.id] === 'implemented').length;
+      const pct = total > 0 ? Math.round(done/total*100) : 0;
+      return `<div class="dps-row">
+        <span class="dps-code">${d.code}</span>
+        <div class="dps-bar-wrap"><div class="dps-bar-fill" style="width:${pct}%"></div></div>
+        <span class="dps-pct">${pct}%</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+function updateDomainNav() {
+  DOMAINS.forEach(d => {
+    const total = CONTROLS.filter(c => c.domain === d.code).length;
+    const done = CONTROLS.filter(c => c.domain === d.code && statusMap[c.id] === 'implemented').length;
+    const pct = total > 0 ? Math.round(done/total*100) : 0;
+    const prog = document.getElementById('domprog-'+d.code);
+    if (prog) prog.style.width = pct+'%';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// DOMAIN NAV
+// ═══════════════════════════════════════════════════════════
+function buildDomainNav() {
+  const nav = document.getElementById('domainNav');
+  nav.innerHTML = `<button class="domain-btn active" onclick="setDomainFilter('all',this)">
+      <span class="domain-code">ALL</span> All Domains
+      <span class="domain-count">${CONTROLS.length}</span>
+    </button>` +
+    DOMAINS.map(d => {
+      const count = CONTROLS.filter(c => c.domain === d.code).length;
+      return `<div>
+        <button class="domain-btn" onclick="setDomainFilter('${d.code}',this)">
+          <span class="domain-code">${d.code}</span> ${d.name}
+          <span class="domain-count">${count}</span>
+        </button>
+        <div class="domain-progress"><div class="domain-progress-fill" id="domprog-${d.code}" style="width:0%"></div></div>
+      </div>`;
+    }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT
+// ═══════════════════════════════════════════════════════════
+function exportReport() {
+  const impl = CONTROLS.filter(c => statusMap[c.id] === 'implemented');
+  const prog = CONTROLS.filter(c => statusMap[c.id] === 'in-progress');
+  const notS = CONTROLS.filter(c => (statusMap[c.id] || 'not-started') === 'not-started');
+  const na   = CONTROLS.filter(c => statusMap[c.id] === 'na');
+  const date = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  const dateISO = new Date().toISOString().slice(0,10);
+  const pct = Math.round(impl.length / 110 * 100);
+  const scoreColor = pct < 40 ? '#c94a3a' : pct < 70 ? '#d97706' : '#6fcf47';
+
+  // ── TXT REPORT ───────────────────────────────────────────────
+  let txt = `NEATLABS™ CHECKPOINT — CMMC Level 2 Readiness Report
+Generated: ${date}
+Assessment Basis: NIST SP 800-171 Rev.2 (CMMC Level 2)
+Tool: neatlabs.ai · CHECKPOINT
+════════════════════════════════════════════════════════════
+
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────────────────────
+Total Controls:      110
+Implemented:         ${impl.length}  (${pct}%)
+In Progress:         ${prog.length}  (${Math.round(prog.length/110*100)}%)
+Not Started (Gaps):  ${notS.length}  (${Math.round(notS.length/110*100)}%)
+N/A:                 ${na.length}
+
+SPRS Readiness Indicator: ${impl.length}/110
+
+NOTE: This score is an internal readiness indicator only. Your
+official SPRS score must be calculated using the DoD Assessment
+Methodology (v1.2.1) by a qualified assessor.
+
+`;
+  DOMAINS.forEach(d => {
+    const dControls = CONTROLS.filter(c => c.domain === d.code);
+    const dImpl = dControls.filter(c => statusMap[c.id] === 'implemented').length;
+    txt += `════════════════════════════════════════════════════════════\n${d.code} — ${d.name} (${dImpl}/${dControls.length} implemented)\n════════════════════════════════════════════════════════════\n`;
+    dControls.forEach(c => {
+      const st = statusMap[c.id] || 'not-started';
+      const label = { implemented:'✅ IMPLEMENTED', 'in-progress':'🔄 IN PROGRESS', 'not-started':'❌ GAP', na:'⬜ N/A' }[st];
+      txt += `\n${c.id}  [${label}]  ${c.title}\n`;
+      if (st !== 'implemented' && st !== 'na') {
+        txt += `         Common failures: ${c.failures.slice(0,2).join(' / ')}\n`;
+        txt += `         Evidence needed: ${c.evidence.slice(0,2).join(' / ')}\n`;
+      }
+    });
+  });
+  txt += `\n════════════════════════════════════════════════════════════\nPRIORITY GAPS — HARD CONTROLS NOT STARTED\n════════════════════════════════════════════════════════════\n`;
+  notS.filter(c=>c.diff==='hard').forEach(c => { txt += `⚡ ${c.id} — ${c.title}\n   Evidence: ${c.evidence[0]}\n\n`; });
+  txt += `\n════════════════════════════════════════════════════════════\nDISCLAIMER: For internal readiness tracking only. Not an official CMMC result or SPRS score. Consult a C3PAO.\nNEATLABS™ · Security 360, LLC · SDVOSB · neatlabs.ai\n════════════════════════════════════════════════════════════`;
+
+  // ── HTML REPORT ──────────────────────────────────────────────
+  const domainRowsHTML = DOMAINS.map(d => {
+    const dControls = CONTROLS.filter(c => c.domain === d.code);
+    const dImpl = dControls.filter(c => statusMap[c.id] === 'implemented').length;
+    const dProg = dControls.filter(c => statusMap[c.id] === 'in-progress').length;
+    const dGap  = dControls.filter(c => (statusMap[c.id]||'not-started') === 'not-started').length;
+    const dPct  = Math.round(dImpl / dControls.length * 100);
+    const barColor = dPct < 40 ? '#c94a3a' : dPct < 70 ? '#d97706' : '#6fcf47';
+    return `<tr>
+      <td><span class="domain-code-cell">${d.code}</span></td>
+      <td>${d.name}</td>
+      <td style="text-align:center">${dControls.length}</td>
+      <td style="text-align:center;color:#6fcf47;font-weight:700">${dImpl}</td>
+      <td style="text-align:center;color:#d97706">${dProg}</td>
+      <td style="text-align:center;color:#c94a3a;font-weight:700">${dGap}</td>
+      <td style="min-width:120px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="flex:1;height:6px;background:#1a231a;border-radius:99px;overflow:hidden">
+            <div style="width:${dPct}%;height:100%;background:${barColor};border-radius:99px"></div>
+          </div>
+          <span style="color:${barColor};font-weight:700;font-size:11px;width:34px;text-align:right">${dPct}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const priorityGapsHTML = notS.filter(c=>c.diff==='hard').map(c => `
+    <div class="gap-card hard">
+      <div class="gap-header">
+        <span class="gap-id">${c.id}</span>
+        <span class="gap-title">${c.title}</span>
+        <span class="gap-badge hard">HARD</span>
+      </div>
+      <div class="gap-body">
+        <div class="gap-section-label">⚠ TOP FAILURE POINTS</div>
+        ${c.failures.slice(0,3).map(f=>`<div class="gap-item fail">✗ ${f}</div>`).join('')}
+        <div class="gap-section-label" style="margin-top:10px">▸ EVIDENCE TO COLLECT</div>
+        ${c.evidence.slice(0,3).map(e=>`<div class="gap-item evid">▸ ${e}</div>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const medGapsHTML = notS.filter(c=>c.diff==='medium').map(c => `
+    <div class="gap-card medium">
+      <div class="gap-header">
+        <span class="gap-id">${c.id}</span>
+        <span class="gap-title">${c.title}</span>
+        <span class="gap-badge medium">MED</span>
+      </div>
+      <div class="gap-body">
+        <div class="gap-item fail">✗ ${c.failures[0]}</div>
+        <div class="gap-item evid">▸ ${c.evidence[0]}</div>
+      </div>
+    </div>`).join('');
+
+  const allControlsHTML = DOMAINS.map(d => {
+    const dControls = CONTROLS.filter(c => c.domain === d.code);
+    const dImpl = dControls.filter(c => statusMap[c.id] === 'implemented').length;
+    const rows = dControls.map(c => {
+      const st = statusMap[c.id] || 'not-started';
+      const stLabel = { implemented:'DONE', 'in-progress':'IN PROGRESS', 'not-started':'GAP', na:'N/A' }[st];
+      const stClass = { implemented:'st-done', 'in-progress':'st-prog', 'not-started':'st-gap', na:'st-na' }[st];
+      const diffClass2 = { easy:'diff2-easy', medium:'diff2-med', hard:'diff2-hard' }[c.diff];
+      const failHTML = (st !== 'implemented' && st !== 'na') ? `<div class="ctrl-detail"><span class="ctrl-detail-label">FAILURES:</span> ${c.failures.slice(0,2).join(' · ')}</div><div class="ctrl-detail"><span class="ctrl-detail-label">EVIDENCE:</span> ${c.evidence.slice(0,2).join(' · ')}</div>` : '';
+      return `<tr class="ctrl-row ${stClass}">
+        <td><span class="ctrl-id-cell">${c.id}</span></td>
+        <td>
+          <div class="ctrl-name">${c.title}</div>
+          ${failHTML}
+        </td>
+        <td style="text-align:center"><span class="diff-badge2 ${diffClass2}">${c.diff}</span></td>
+        <td style="text-align:center"><span class="status-badge ${stClass}">${stLabel}</span></td>
+      </tr>`;
+    }).join('');
+    return `<div class="domain-block">
+      <div class="domain-block-header">
+        <span class="dblock-code">${d.code}</span>
+        <span class="dblock-name">${d.name}</span>
+        <span class="dblock-count">${dImpl}/${dControls.length}</span>
+      </div>
+      <table class="ctrl-table">
+        <thead><tr><th style="width:80px">Control</th><th>Title &amp; Details</th><th style="width:80px;text-align:center">Difficulty</th><th style="width:110px;text-align:center">Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+
+  const htmlReport = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CMMC L2 Readiness Report — ${date}</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:14px;}
+body{background:#070c07;color:#d4e8c2;font-family:'Barlow',sans-serif;min-height:100vh;}
+a{color:#c8a84b;}
+
+/* TOP BAND */
+.top-band{background:#c8a84b;padding:5px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:4px;color:#070c07;}
+
+/* HEADER */
+.report-header{padding:36px 48px 28px;border-bottom:1px solid rgba(120,180,80,0.15);background:linear-gradient(180deg,rgba(200,168,75,0.06) 0%,transparent 100%);}
+.rh-top{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;flex-wrap:wrap;margin-bottom:24px;}
+.rh-brand{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#6fcf47;margin-bottom:8px;}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;line-height:0.95;text-transform:uppercase;letter-spacing:-1px;}
+.h1-a{color:#c8a84b;display:block;}
+.h1-b{color:#d4e8c2;display:block;}
+.rh-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(212,232,194,0.5);line-height:2;margin-top:10px;}
+.rh-meta strong{color:#c8a84b;}
+
+/* SCORE PANEL */
+.score-panel{background:#0d140d;border:1px solid rgba(200,168,75,0.25);border-radius:8px;padding:20px 28px;min-width:260px;flex-shrink:0;}
+.sp-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#c8a84b;margin-bottom:10px;}
+.sp-score{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;line-height:1;color:${scoreColor};}
+.sp-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(212,232,194,0.4);letter-spacing:1px;margin-bottom:12px;}
+.sp-bar-wrap{background:#121a12;border-radius:99px;height:6px;margin-bottom:14px;overflow:hidden;}
+.sp-bar{height:100%;border-radius:99px;background:${scoreColor};width:${pct}%;}
+.sp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sp-stat-num{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;line-height:1;}
+.sp-stat-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(212,232,194,0.3);}
+
+/* CONTENT */
+.content{max-width:1200px;margin:0 auto;padding:32px 48px 48px;}
+
+/* SECTION */
+.section{margin-bottom:40px;}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:0.5px;color:#c8a84b;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(200,168,75,0.2);display:flex;align-items:center;gap:10px;}
+
+/* DOMAIN TABLE */
+.domain-table{width:100%;border-collapse:collapse;font-size:12px;}
+.domain-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(212,232,194,0.4);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(120,180,80,0.1);}
+.domain-table td{padding:10px 12px;border-bottom:1px solid rgba(120,180,80,0.06);font-size:12px;}
+.domain-table tr:hover td{background:rgba(120,180,80,0.03);}
+.domain-code-cell{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#c8a84b;background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.2);padding:2px 7px;border-radius:3px;}
+
+/* ALERT BOX */
+.alert-box{background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.2);border-left:3px solid #c8a84b;border-radius:6px;padding:16px 20px;font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.9;color:rgba(212,232,194,0.6);margin-bottom:24px;}
+.alert-box strong{color:#c8a84b;}
+
+/* GAP CARDS */
+.gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:12px;}
+.gap-card{background:#0d140d;border-radius:6px;overflow:hidden;}
+.gap-card.hard{border:1px solid rgba(201,74,58,0.3);border-left:3px solid #c94a3a;}
+.gap-card.medium{border:1px solid rgba(217,119,6,0.2);border-left:3px solid #d97706;}
+.gap-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(120,180,80,0.08);}
+.gap-id{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#c8a84b;flex-shrink:0;}
+.gap-title{font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;flex:1;}
+.gap-badge{padding:2px 7px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;flex-shrink:0;}
+.gap-badge.hard{background:rgba(201,74,58,0.12);color:#c94a3a;border:1px solid rgba(201,74,58,0.3);}
+.gap-badge.medium{background:rgba(217,119,6,0.12);color:#d97706;border:1px solid rgba(217,119,6,0.3);}
+.gap-body{padding:12px 14px;}
+.gap-section-label{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c8a84b;margin-bottom:6px;}
+.gap-item{font-family:'IBM Plex Mono',monospace;font-size:10px;line-height:1.7;color:rgba(212,232,194,0.55);padding-left:14px;position:relative;}
+.gap-item.fail::before{content:'✗';position:absolute;left:0;color:#c94a3a;}
+.gap-item.evid::before{content:'▸';position:absolute;left:0;color:#c8a84b;}
+
+/* DOMAIN BLOCKS */
+.domain-block{margin-bottom:24px;border:1px solid rgba(120,180,80,0.1);border-radius:6px;overflow:hidden;}
+.domain-block-header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#0d140d;border-bottom:1px solid rgba(120,180,80,0.1);}
+.dblock-code{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#c8a84b;width:44px;flex-shrink:0;}
+.dblock-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;flex:1;}
+.dblock-count{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:rgba(212,232,194,0.4);}
+
+/* CONTROL TABLE */
+.ctrl-table{width:100%;border-collapse:collapse;font-size:11px;}
+.ctrl-table th{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(212,232,194,0.35);padding:6px 12px;text-align:left;background:#0a110a;border-bottom:1px solid rgba(120,180,80,0.08);}
+.ctrl-table td{padding:9px 12px;border-bottom:1px solid rgba(120,180,80,0.05);vertical-align:top;}
+.ctrl-id-cell{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:#c8a84b;}
+.ctrl-name{font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;margin-bottom:4px;}
+.ctrl-detail{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(212,232,194,0.4);line-height:1.6;}
+.ctrl-detail-label{color:#c8a84b;font-weight:700;}
+
+.ctrl-row.st-done td{background:rgba(74,156,47,0.04);}
+.ctrl-row.st-prog td{background:rgba(217,119,6,0.04);}
+.ctrl-row.st-gap td{background:rgba(201,74,58,0.04);}
+
+.status-badge{padding:2px 8px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;white-space:nowrap;}
+.status-badge.st-done{background:rgba(74,156,47,0.15);color:#6fcf47;border:1px solid rgba(74,156,47,0.3);}
+.status-badge.st-prog{background:rgba(217,119,6,0.12);color:#d97706;border:1px solid rgba(217,119,6,0.3);}
+.status-badge.st-gap{background:rgba(201,74,58,0.12);color:#c94a3a;border:1px solid rgba(201,74,58,0.3);}
+.status-badge.st-na{background:rgba(212,232,194,0.06);color:rgba(212,232,194,0.35);border:1px solid rgba(212,232,194,0.1);}
+
+.diff-badge2{padding:2px 7px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;}
+.diff2-easy{background:rgba(74,156,47,0.1);color:#6fcf47;border:1px solid rgba(74,156,47,0.25);}
+.diff2-med{background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.25);}
+.diff2-hard{background:rgba(201,74,58,0.1);color:#c94a3a;border:1px solid rgba(201,74,58,0.25);}
+
+/* PAGE BREAK for print */
+@media print{
+  .domain-block{page-break-inside:avoid;}
+  .gap-card{page-break-inside:avoid;}
+  body{background:#fff;color:#111;}
+  .top-band{background:#c8a84b;color:#000;}
+}
+
+/* FOOTER */
+.report-footer{border-top:1px solid rgba(120,180,80,0.1);padding:20px 48px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(212,232,194,0.35);line-height:1.8;}
+.report-footer strong{color:rgba(200,168,75,0.6);}
+</style>
+</head>
+<body>
+
+<div class="top-band">⬛ NEATLABS™ CHECKPOINT · CMMC LEVEL 2 READINESS REPORT · NIST SP 800-171 REV.2 · ${date} · FOR OFFICIAL USE ONLY ⬛</div>
+
+<div class="report-header">
+  <div class="rh-top">
+    <div>
+      <div class="rh-brand">NEATLABS™ · Security 360, LLC · SDVOSB</div>
+      <h1><span class="h1-a">CMMC Level 2</span><span class="h1-b">Readiness Report</span></h1>
+      <div class="rh-meta">
+        <strong>Generated:</strong> ${date}<br>
+        <strong>Assessment Basis:</strong> NIST SP 800-171 Rev.2 · 110 Controls · 14 Domains<br>
+        <strong>Enforcement Status:</strong> CMMC Title 48 Rule active (Nov 10, 2025) · DFARS 252.204-7021<br>
+        <strong>Tool:</strong> NEATLABS™ CHECKPOINT · neatlabs.ai<br>
+        <strong>NOTE:</strong> Internal readiness indicator — not an official SPRS score or C3PAO result
+      </div>
+    </div>
+    <div class="score-panel">
+      <div class="sp-label">⬛ SPRS Readiness Score</div>
+      <div class="sp-score">${impl.length}</div>
+      <div class="sp-sub">OF 110 CONTROLS IMPLEMENTED (${pct}%)</div>
+      <div class="sp-bar-wrap"><div class="sp-bar"></div></div>
+      <div class="sp-grid">
+        <div><div class="sp-stat-num" style="color:#6fcf47">${impl.length}</div><div class="sp-stat-lbl">Implemented</div></div>
+        <div><div class="sp-stat-num" style="color:#d97706">${prog.length}</div><div class="sp-stat-lbl">In Progress</div></div>
+        <div><div class="sp-stat-num" style="color:#c94a3a">${notS.length}</div><div class="sp-stat-lbl">Gaps</div></div>
+        <div><div class="sp-stat-num" style="color:rgba(212,232,194,0.4)">${na.length}</div><div class="sp-stat-lbl">N/A</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- DOMAIN SUMMARY TABLE -->
+  <div class="section">
+    <div class="section-title">📊 Domain Summary</div>
+    <table class="domain-table">
+      <thead>
+        <tr>
+          <th>Domain</th><th>Name</th><th style="text-align:center">Total</th>
+          <th style="text-align:center">✅ Done</th><th style="text-align:center">🔄 Prog</th>
+          <th style="text-align:center">❌ Gaps</th><th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>${domainRowsHTML}</tbody>
+    </table>
+  </div>
+
+  ${notS.filter(c=>c.diff==='hard').length > 0 ? `
+  <!-- HARD GAPS -->
+  <div class="section">
+    <div class="section-title">⚡ Priority Gaps — Hard Controls</div>
+    <div class="alert-box"><strong>ACTION REQUIRED:</strong> These ${notS.filter(c=>c.diff==='hard').length} hard controls are not yet started. Hard controls require the most lead time (documentation, tooling, process change) and are the most common audit findings. Address these first in your POA&M.</div>
+    <div class="gap-grid">${priorityGapsHTML}</div>
+  </div>` : ''}
+
+  ${notS.filter(c=>c.diff==='medium').length > 0 ? `
+  <!-- MEDIUM GAPS -->
+  <div class="section">
+    <div class="section-title">⚠ Open Gaps — Medium Controls</div>
+    <div class="gap-grid">${medGapsHTML}</div>
+  </div>` : ''}
+
+  <!-- FULL CONTROL STATUS -->
+  <div class="section">
+    <div class="section-title">📋 Full Control Status — All 110 Controls</div>
+    ${allControlsHTML}
+  </div>
+
+</div>
+
+<div class="report-footer">
+  <strong>DISCLAIMER —</strong> This report is generated by NEATLABS™ CHECKPOINT and is provided by Security 360, LLC for internal readiness tracking purposes only. It does not constitute an official CMMC certification, SPRS score submission, or C3PAO assessment result. The SPRS score shown is an internal readiness indicator only. Your official SPRS score must be submitted via the DoD SPRS portal using the DoD Assessment Methodology (v1.2.1) by a qualified assessor. For CMMC Level 2 (C3PAO path), certification requires an assessment by an accredited C3PAO listed by the Cyber AB. NIST SP 800-171 Rev.2 is the current required baseline for CMMC Level 2 as of the report date. Always verify the current requirements at dodcio.defense.gov. <strong>NEATLABS™ · Security 360, LLC · SDVOSB · neatlabs.ai</strong>
+</div>
+</body>
+</html>`;
+
+  // ── FIRE BOTH DOWNLOADS ──────────────────────────────────────
+  function download(content, filename, type) {
+    const blob = new Blob([content], {type});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  download(txt, `neatlabs-checkpoint-cmmc-l2-${dateISO}.txt`, 'text/plain');
+  setTimeout(() => {
+    download(htmlReport, `neatlabs-checkpoint-cmmc-l2-${dateISO}.html`, 'text/html');
+  }, 300);
+
+  showToast('📤 Exported: TXT + HTML report!');
+}
+
+function resetAll() {
+  if (!confirm('Reset all status selections? This cannot be undone.')) return;
+  statusMap = {};
+  saveStatus();
+  expandedCards.clear();
+  renderAll();
+  updateStats();
+  buildDomainNav();
+  showToast('↺ All statuses reset');
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+function init() {
+  buildDomainNav();
+  renderAll();
+  updateStats();
+}
+
+init();
+</script>
+</body>
+</html>
